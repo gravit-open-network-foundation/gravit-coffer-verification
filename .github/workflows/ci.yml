@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pytest
+      - name: Adversarial tests
+        run: python -m pytest -q
+      - name: Results are reproducible from the committed evidence (byte for byte, no network)
+        run: |
+          for d in evidence/*/; do python -m coffer_verify.run verify "$(basename "$d")"; done
+          git diff --exit-code results/

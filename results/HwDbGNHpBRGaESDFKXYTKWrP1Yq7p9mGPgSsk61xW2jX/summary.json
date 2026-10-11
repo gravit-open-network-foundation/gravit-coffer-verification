@@ -1,0 +1,48 @@
+{
+ "chain_head": "c03819a042775cd39b0c16dababae78764ace4d687e16ddfb88fe3aeb48effd5",
+ "evidence": {
+  "file": "evidence/HwDbGNHpBRGaESDFKXYTKWrP1Yq7p9mGPgSsk61xW2jX/transactions.jsonl.gz",
+  "first_slot": 452290026,
+  "last_slot": 455738449,
+  "transactions": 760
+ },
+ "final_state": {
+  "actual_balances": [
+   130284,
+   216964535,
+   1494008715
+  ],
+  "config": {
+   "max_leverage_bps": 0,
+   "max_vb_change_pct": 2000,
+   "max_weight_change_pct": 1000,
+   "min_leverage_bps": 0,
+   "min_update_interval_secs": 3600
+  },
+  "enabled": true,
+  "last_update": 1791278886,
+  "range_manager": "2fNEZiQDiRwqzmt43Fx142dd8kmH77XF8vHCTyWPnKPi",
+  "virtual_balances": [
+   1967887856,
+   17217663463,
+   18657803169
+  ],
+  "weights": [
+   2500,
+   2500,
+   5000
+  ]
+ },
+ "final_state_matches_chain": {
+  "differences": {},
+  "result": "VERIFIED",
+  "snapshot_slot": 455739823
+ },
+ "pool": "HwDbGNHpBRGaESDFKXYTKWrP1Yq7p9mGPgSsk61xW2jX",
+ "range_manager_updates": 3,
+ "rejected_by_program": [],
+ "results": {
+  "VERIFIED": 3
+ },
+ "undecodable_items": 0
+}
