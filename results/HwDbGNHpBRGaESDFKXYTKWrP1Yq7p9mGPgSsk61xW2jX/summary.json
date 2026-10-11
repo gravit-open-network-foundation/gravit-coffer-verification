@@ -44,5 +44,35 @@
  "results": {
   "VERIFIED": 3
  },
+ "swap_verification": {
+  "by_obligation": {
+   "COF-FEE": {
+    "VERIFIED": 609
+   },
+   "COF-POST": {
+    "INSUFFICIENT": 2,
+    "VERIFIED": 607
+   },
+   "COF-PRICE": {
+    "INSUFFICIENT": 1,
+    "VERIFIED": 608
+   },
+   "COF-SURGE": {
+    "NOT_APPLICABLE": 608
+   }
+  },
+  "chain_head": "e0121bd5273f0aa16b6fa794a92cd2c7613cd8d61afa62d8002d478f9860a69f",
+  "reserve_checks": {
+   "INVALID": 0,
+   "VERIFIED": 1216,
+   "examples": [],
+   "skipped_truncated_logs": 1
+  },
+  "results": {
+   "INSUFFICIENT": 2,
+   "VERIFIED": 607
+  },
+  "swaps": 609
+ },
  "undecodable_items": 0
 }

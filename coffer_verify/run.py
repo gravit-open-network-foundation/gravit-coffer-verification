@@ -18,6 +18,7 @@ from pathlib import Path
 import base64
 
 from .chain import DEC, account_snapshot, fetch_transaction, signatures
+from .swaps import verify_swaps
 from .verify import replay, sha256_json
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -77,19 +78,40 @@ def cross_check(pool: str, fs: dict) -> dict:
     return {"result": "VERIFIED" if not diff else "CONFLICTING", "snapshot_slot": snap["slot"], "differences": diff}
 
 
+def write_chain(path: Path, records: list) -> str:
+    """Hash-chained JSONL: each entry carries the hash of the previous one."""
+    prev = "0" * 64
+    lines = []
+    for i, rec in enumerate(records):
+        entry = {"seq": i, "prev_hash": prev, "record": rec}
+        entry["entry_hash"] = sha256_json(entry)
+        prev = entry["entry_hash"]
+        lines.append(json.dumps(entry, sort_keys=True))
+    path.write_text("".join(l + "\n" for l in lines))
+    return prev
+
+
 def verify(pool: str) -> int:
     txs = load(pool)
     out = replay(pool, txs)
     d = ROOT / "results" / pool
     d.mkdir(parents=True, exist_ok=True)
-    prev = "0" * 64
-    lines = []
-    for i, rec in enumerate(out["records"]):
-        entry = {"seq": i, "prev_hash": prev, "record": rec}
-        entry["entry_hash"] = sha256_json(entry)
-        prev = entry["entry_hash"]
-        lines.append(json.dumps(entry, sort_keys=True))
-    (d / "records.jsonl").write_text("".join(l + "\n" for l in lines))
+    prev = write_chain(d / "records.jsonl", out["records"])
+    acc_path = evidence_path(pool).parent / "account.json"
+    sw = verify_swaps(pool, txs, json.loads(acc_path.read_text())["data"]) if acc_path.exists() else None
+    swap_summary = None
+    if sw is not None:
+        by_ob: dict = {}
+        for r in sw["swaps"]:
+            for o in r["obligations"]:
+                by_ob.setdefault(o["id"], {}).setdefault(o["result"], 0)
+                by_ob[o["id"]][o["result"]] += 1
+        finals: dict = {}
+        for r in sw["swaps"]:
+            finals[r["final"]] = finals.get(r["final"], 0) + 1
+        swap_summary = {"swaps": len(sw["swaps"]), "results": finals, "by_obligation": by_ob,
+                        "reserve_checks": sw["reserves"],
+                        "chain_head": write_chain(d / "swaps.jsonl", sw["swaps"])}
     counts = {}
     for rec in out["records"]:
         counts[rec["final"]] = counts.get(rec["final"], 0) + 1
@@ -100,6 +122,7 @@ def verify(pool: str) -> int:
         "evidence": {"file": str(evidence_path(pool).relative_to(ROOT)), "transactions": len(txs),
                      "first_slot": txs[0]["slot"] if txs else None, "last_slot": txs[-1]["slot"] if txs else None},
         "range_manager_updates": len(out["records"]),
+        "swap_verification": swap_summary,
         "results": counts,
         "rejected_by_program": out["rejected_updates"],
         "undecodable_items": out["undecodable_items"],
@@ -109,6 +132,9 @@ def verify(pool: str) -> int:
     (d / "summary.json").write_text(json.dumps(summary, indent=1, sort_keys=True) + "\n")
     print(json.dumps({k: summary[k] for k in ("pool", "range_manager_updates", "results", "undecodable_items")}))
     print("  final state matches chain:", final_check["result"], final_check.get("differences") or "")
+    if swap_summary:
+        print("  swaps:", swap_summary["swaps"], swap_summary["results"], "reserves:",
+              {k: v for k, v in swap_summary["reserve_checks"].items() if k != "examples"})
     for rec in out["records"]:
         print(f"  slot {rec['transition']['slot']}  {rec['final']:12}  "
               + " ".join(f"{o['id']}={o['result']}" for o in rec["obligations"]))
