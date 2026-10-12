@@ -43,9 +43,12 @@ def within_cap(cur: int, new: int, cap: int) -> bool:
     return abs(new - cur) * PCT <= cap * cur
 
 
+ZERO_KEY = "11111111111111111111111111111111"  # the program's "no range manager"
+
+
 class PoolState:
     def __init__(self) -> None:
-        self.manager: Optional[str] = None
+        self.manager: Optional[str] = ZERO_KEY
         self.enabled = False
         self.cfg = {"max_vb_change_pct": 0, "max_weight_change_pct": 0, "min_update_interval_secs": 0,
                     "max_leverage_bps": 0, "min_leverage_bps": 0}
@@ -60,9 +63,15 @@ def check_update(st: PoolState, ix: Dict[str, Any], ts: int) -> List[Dict[str, A
     cfg = st.cfg
     res: List[Dict[str, Any]] = []
 
-    ok = bool(auth.get("signer")) and auth.get("key") == st.manager and st.enabled
-    res.append({"id": "COF-AUTH", "result": "VERIFIED" if ok else "INVALID",
-                "detail": {"signer": auth.get("key"), "manager": st.manager, "enabled": st.enabled}})
+    if st.manager is None:
+        res.append({"id": "COF-AUTH", "result": "INSUFFICIENT", "detail": "manager before the evidence window unknown"})
+    else:
+        ok = bool(auth.get("signer")) and auth.get("key") == st.manager and st.enabled
+        res.append({"id": "COF-AUTH", "result": "VERIFIED" if ok else "INVALID",
+                    "detail": {"signer": auth.get("key"), "manager": st.manager, "enabled": st.enabled}})
+    if any(v is None for v in cfg.values()):
+        res.append({"id": "COF-CONFIG", "result": "INSUFFICIENT", "detail": {"policy_in_effect": cfg}})
+        return res
 
     # declared pre-state vs reconstructed pre-state
     conflicts = []
@@ -149,9 +158,44 @@ def final_result(obligations: List[Dict[str, Any]]) -> str:
     return "VERIFIED"
 
 
-def replay(pool: str, txs: List[Dict[str, Any]]) -> Dict[str, Any]:
-    """`txs`: the pool's transactions, oldest first (raw getTransaction JSON)."""
+def initial_from_snapshot(pool: str, txs: List[Dict[str, Any]], acc: Dict[str, Any]) -> PoolState:
+    """For evidence that starts after the pool's creation: roll the range-manager
+    settings back from the account snapshot through every change in the evidence.
+    What cannot be recovered stays None (-> INSUFFICIENT)."""
     st = PoolState()
+    st.manager, st.enabled = acc["range_manager"], acc["range_manager_enabled"]
+    st.cfg = {"max_vb_change_pct": acc["range_manager_max_vb_change_pct"],
+              "max_weight_change_pct": acc["range_manager_max_weight_change_pct"],
+              "min_update_interval_secs": acc["range_manager_min_update_interval_secs"],
+              "max_leverage_bps": acc["range_manager_max_leverage_bps"],
+              "min_leverage_bps": acc["range_manager_min_leverage_bps"]}
+    n = acc["token_count"]
+    st.weights = [t["config"]["normalized_weight"] for t in acc["tokens"][:n]]
+    for tx in reversed(txs):
+        if (tx.get("meta") or {}).get("err") is not None:
+            continue
+        for ix in reversed([x for x in decode_instructions(tx) if x["accounts"].get("pool", {}).get("key") == pool]):
+            if ix["name"] == "range_manager_update":
+                for c in ix["args"]["weight_changes"]:
+                    st.weights[c["index"]] = c["expected_current"]
+        for name, e in reversed(decode_events(tx)):
+            if e.get("pool") != pool:
+                continue
+            if name == "RangeManagerSet":
+                st.manager, st.enabled = e["old_manager"], e["old_enabled"]
+            elif name == "RangeManagerConfigSet":
+                st.cfg = {"max_vb_change_pct": e["old_max_vb_change_pct"],
+                          "max_weight_change_pct": e["old_max_weight_change_pct"],
+                          "min_update_interval_secs": e["old_min_update_interval_secs"],
+                          "max_leverage_bps": e["old_max_leverage_bps"],
+                          "min_leverage_bps": None}  # not carried by the event
+    return st
+
+
+def replay(pool: str, txs: List[Dict[str, Any]], acc: Optional[Dict[str, Any]] = None,
+           from_genesis: bool = True) -> Dict[str, Any]:
+    """`txs`: the pool's transactions, oldest first (raw getTransaction JSON)."""
+    st = PoolState() if from_genesis or acc is None else initial_from_snapshot(pool, txs, acc)
     records: List[Dict[str, Any]] = []
     rejected: List[Dict[str, Any]] = []
     undecodable = 0
@@ -173,6 +217,7 @@ def replay(pool: str, txs: List[Dict[str, Any]]) -> Dict[str, Any]:
             if ix["name"] == "initialize_cubic_pool":
                 st.weights = list(a["normalized_weights"])
                 st.vb = list(a["initial_virtual_balances"])
+                st.actual = [0] * len(st.vb)  # actual reserves start at zero (program docs)
             elif ix["name"] == "set_range_manager":
                 st.manager, st.enabled = a["new_manager"], a["enabled"]
             elif ix["name"] == "set_range_manager_config":

@@ -1,0 +1,30 @@
+{
+ "fees_usd": 923.51,
+ "of_which_priced_by_stablecoin_leg": 3466596.47,
+ "pools": {
+  "2LCwQQg4gYAunZuA6ajUBFyR4jeFkqgzi3T1ffZziJEe": 170.87,
+  "3YixTPPZGCrFKXH6qVWsAADcFwfhp8GLL9ZRv4MJyscc": 166864.02,
+  "3fZjF8byNruewcc37a1By1XKZggKAVDebzKqJTgu9Ezz": 1345.69,
+  "5dDezuaofYZUBdab8gSWY3ys86VbMrTxsRuf3ayqe8GJ": 7748.11,
+  "6NjpZAqu5BHnNf9xMKgesVS6WBGE4ZLT8DvrdsGCjLg5": 25557.61,
+  "7nXr8T7iDXwi2bB1LzH3uEZheDth5LQYC4DvefkPJkHy": 1937.15,
+  "8Ep1KN9hbRvLd6eyywqS84SZ33Zqs29ec8mSTCNMAN2e": 0.22,
+  "AL4yxA4o28c3dPwDSQm7VN1fxNeVfim13qzKkJfs4cKe": 3419156.83,
+  "CSgrEBxsghBsY1oXycBEhZVTd5PEbZuWFDZHHrtFF7yb": 7528.7,
+  "CzPEgwuuaKm1oinoTLrvwLMHwsnEh4gNv27zKm7NXVem": 920.35,
+  "EFfVk5qcKBKEQXeWwWjVsnit3YqLNXNENUDW5Fxdfyjy": 6301.09,
+  "GkMm2ZdBKcimHaJvjH5Tf9ATVnCdAgJBHQd4NUJRPLXY": 3075.64,
+  "HtScETzS8TaKD745GP9ARAGTDryXvSzPB2H1KdBNAkQd": 134.32,
+  "HwDbGNHpBRGaESDFKXYTKWrP1Yq7p9mGPgSsk61xW2jX": 2449.95
+ },
+ "price_source_for_other_swaps": "https://lite-api.jup.ag/price/v3 (snapshot at computation time)",
+ "swaps": 20841,
+ "transactions_in_plan": 20736,
+ "transactions_missing": 0,
+ "unpriced_swaps": 66,
+ "volume_usd": 3643190.55,
+ "window": {
+  "end": 1791756000,
+  "start": 1789164000
+ }
+}

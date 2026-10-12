@@ -1,0 +1,21 @@
+{
+ "record": {
+  "integrity_hash": "867c679ec886e3787f78b7f12bb362a53dd1fc3f2d15a66735159cb7bdbda46f",
+  "key_id": "57158f338fafbed7",
+  "provenance": "Gravit-reference-run-TEST-KEY",
+  "record_id": "Gravit-reference-run-TEST-KEY:2026-10-12T05:21:18Z",
+  "result": true,
+  "signature": "e8Bb7GZ9CehWRTRHD5cHvZFezm6APPqF/1281a0sw3xvzc4jaVlum899bIANmRx3se51f6xgpyt+l+HFxCSRDQ==",
+  "theta": 1.0,
+  "timestamp": "2026-10-12T05:21:18Z",
+  "verifier_id": "Gravit-reference-run-TEST-KEY"
+ },
+ "relation": "independent",
+ "totals": {
+  "CONFLICTING": 0,
+  "INSUFFICIENT": 23,
+  "INVALID": 0,
+  "NOT_APPLICABLE": 20448,
+  "VERIFIED": 63194
+ }
+}

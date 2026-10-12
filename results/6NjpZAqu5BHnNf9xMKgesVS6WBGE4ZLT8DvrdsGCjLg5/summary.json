@@ -1,0 +1,76 @@
+{
+ "chain_head": "0000000000000000000000000000000000000000000000000000000000000000",
+ "evidence": {
+  "file": "evidence/6NjpZAqu5BHnNf9xMKgesVS6WBGE4ZLT8DvrdsGCjLg5/transactions.jsonl.gz",
+  "first_slot": 446647673,
+  "from": 1789164000,
+  "last_slot": 455923080,
+  "transactions": 1579
+ },
+ "final_state": {
+  "actual_balances": [
+   74736110916,
+   16185678419,
+   16347884
+  ],
+  "config": {
+   "max_leverage_bps": 0,
+   "max_vb_change_pct": 0,
+   "max_weight_change_pct": 0,
+   "min_leverage_bps": 0,
+   "min_update_interval_secs": 0
+  },
+  "enabled": false,
+  "last_update": 0,
+  "range_manager": "11111111111111111111111111111111",
+  "virtual_balances": [
+   336078859208,
+   37669098588,
+   45080998
+  ],
+  "weights": [
+   3333,
+   3333,
+   3334
+  ]
+ },
+ "final_state_matches_chain": {
+  "detail": "evidence starts after pool creation; no full replay",
+  "result": "NOT_APPLICABLE"
+ },
+ "pool": "6NjpZAqu5BHnNf9xMKgesVS6WBGE4ZLT8DvrdsGCjLg5",
+ "range_manager_updates": 0,
+ "rejected_by_program": [],
+ "results": {},
+ "swap_verification": {
+  "by_obligation": {
+   "COF-FEE": {
+    "VERIFIED": 1582
+   },
+   "COF-POST": {
+    "INSUFFICIENT": 3,
+    "VERIFIED": 1579
+   },
+   "COF-PRICE": {
+    "INSUFFICIENT": 3,
+    "VERIFIED": 1579
+   },
+   "COF-SURGE": {
+    "NOT_APPLICABLE": 1579
+   }
+  },
+  "chain_head": "bce1699566ce64f89ecf5127e882d0b2a55559d3ff8b3e5d6c95b2df4a2fde9e",
+  "reserve_checks": {
+   "INVALID": 0,
+   "VERIFIED": 3162,
+   "examples": [],
+   "skipped_truncated_logs": 3
+  },
+  "results": {
+   "INSUFFICIENT": 3,
+   "VERIFIED": 1579
+  },
+  "swaps": 1582
+ },
+ "undecodable_items": 0
+}

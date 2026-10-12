@@ -18,6 +18,7 @@ from pathlib import Path
 import base64
 
 from .chain import DEC, account_snapshot, fetch_transaction, signatures
+from .swaps import verify_swaps
 from .verify import replay, sha256_json
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -28,9 +29,12 @@ def evidence_path(pool: str) -> Path:
     return ROOT / "evidence" / pool / "transactions.jsonl.gz"
 
 
-def fetch(pool: str) -> None:
+def fetch(pool: str, since: int = 0) -> None:
+    """since = 0: the pool's complete history; otherwise every transaction with blockTime >= since."""
     snap = account_snapshot(pool)  # read first: every transaction up to this slot is in the history below
-    sigs = [s for s in signatures(pool) if s["slot"] <= snap["slot"]]
+    sigs = [s for s in signatures(pool) if s["slot"] <= snap["slot"] and (s.get("blockTime") or 0) >= since
+            and (since == 0 or s["err"] is None)]  # windowed evidence: successful transactions only
+    snap["evidence_from_unix_time"] = since
     txs = []
     for i, s in enumerate(sigs):
         txs.append(fetch_transaction(s["signature"], CACHE))
@@ -77,29 +81,56 @@ def cross_check(pool: str, fs: dict) -> dict:
     return {"result": "VERIFIED" if not diff else "CONFLICTING", "snapshot_slot": snap["slot"], "differences": diff}
 
 
-def verify(pool: str) -> int:
-    txs = load(pool)
-    out = replay(pool, txs)
-    d = ROOT / "results" / pool
-    d.mkdir(parents=True, exist_ok=True)
+def write_chain(path: Path, records: list) -> str:
+    """Hash-chained JSONL: each entry carries the hash of the previous one."""
     prev = "0" * 64
     lines = []
-    for i, rec in enumerate(out["records"]):
+    for i, rec in enumerate(records):
         entry = {"seq": i, "prev_hash": prev, "record": rec}
         entry["entry_hash"] = sha256_json(entry)
         prev = entry["entry_hash"]
         lines.append(json.dumps(entry, sort_keys=True))
-    (d / "records.jsonl").write_text("".join(l + "\n" for l in lines))
+    path.write_text("".join(l + "\n" for l in lines))
+    return prev
+
+
+def verify(pool: str) -> int:
+    txs = load(pool)
+    acc_path = evidence_path(pool).parent / "account.json"
+    snap = json.loads(acc_path.read_text()) if acc_path.exists() else None
+    from_genesis = not snap or not snap.get("evidence_from_unix_time")
+    acc = DEC.struct("CubicPool", base64.b64decode(snap["data"]), 8)[0] if snap else None
+    out = replay(pool, txs, acc, from_genesis)
+    d = ROOT / "results" / pool
+    d.mkdir(parents=True, exist_ok=True)
+    prev = write_chain(d / "records.jsonl", out["records"])
+    sw = verify_swaps(pool, txs, json.loads(acc_path.read_text())["data"]) if acc_path.exists() else None
+    swap_summary = None
+    if sw is not None:
+        by_ob: dict = {}
+        for r in sw["swaps"]:
+            for o in r["obligations"]:
+                by_ob.setdefault(o["id"], {}).setdefault(o["result"], 0)
+                by_ob[o["id"]][o["result"]] += 1
+        finals: dict = {}
+        for r in sw["swaps"]:
+            finals[r["final"]] = finals.get(r["final"], 0) + 1
+        swap_summary = {"swaps": len(sw["swaps"]), "results": finals, "by_obligation": by_ob,
+                        "reserve_checks": sw["reserves"],
+                        "chain_head": write_chain(d / "swaps.jsonl", sw["swaps"])}
     counts = {}
     for rec in out["records"]:
         counts[rec["final"]] = counts.get(rec["final"], 0) + 1
-    final_check = cross_check(pool, out["final_state"])
+    final_check = cross_check(pool, out["final_state"]) if from_genesis else {
+        "result": "NOT_APPLICABLE", "detail": "evidence starts after pool creation; no full replay"}
     summary = {
         "final_state_matches_chain": final_check,
         "pool": pool,
         "evidence": {"file": str(evidence_path(pool).relative_to(ROOT)), "transactions": len(txs),
+                     "from": "pool creation" if from_genesis else snap["evidence_from_unix_time"],
                      "first_slot": txs[0]["slot"] if txs else None, "last_slot": txs[-1]["slot"] if txs else None},
         "range_manager_updates": len(out["records"]),
+        "swap_verification": swap_summary,
         "results": counts,
         "rejected_by_program": out["rejected_updates"],
         "undecodable_items": out["undecodable_items"],
@@ -109,6 +140,9 @@ def verify(pool: str) -> int:
     (d / "summary.json").write_text(json.dumps(summary, indent=1, sort_keys=True) + "\n")
     print(json.dumps({k: summary[k] for k in ("pool", "range_manager_updates", "results", "undecodable_items")}))
     print("  final state matches chain:", final_check["result"], final_check.get("differences") or "")
+    if swap_summary:
+        print("  swaps:", swap_summary["swaps"], swap_summary["results"], "reserves:",
+              {k: v for k, v in swap_summary["reserve_checks"].items() if k != "examples"})
     for rec in out["records"]:
         print(f"  slot {rec['transition']['slot']}  {rec['final']:12}  "
               + " ".join(f"{o['id']}={o['result']}" for o in rec["obligations"]))
@@ -117,4 +151,5 @@ def verify(pool: str) -> int:
 
 if __name__ == "__main__":
     cmd, pool = sys.argv[1], sys.argv[2]
-    raise SystemExit(fetch(pool) if cmd == "fetch" else verify(pool))
+    since = int(sys.argv[3]) if len(sys.argv) > 3 else 0
+    raise SystemExit(fetch(pool, since) if cmd == "fetch" else verify(pool))

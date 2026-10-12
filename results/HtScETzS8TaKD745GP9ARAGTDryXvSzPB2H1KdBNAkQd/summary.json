@@ -3,6 +3,7 @@
  "evidence": {
   "file": "evidence/HtScETzS8TaKD745GP9ARAGTDryXvSzPB2H1KdBNAkQd/transactions.jsonl.gz",
   "first_slot": 451334709,
+  "from": "pool creation",
   "last_slot": 452287867,
   "transactions": 172
  },
@@ -57,13 +58,40 @@
  "final_state_matches_chain": {
   "differences": {},
   "result": "VERIFIED",
-  "snapshot_slot": 455739848
+  "snapshot_slot": 455927707
  },
  "pool": "HtScETzS8TaKD745GP9ARAGTDryXvSzPB2H1KdBNAkQd",
  "range_manager_updates": 3,
  "rejected_by_program": [],
  "results": {
   "VERIFIED": 3
+ },
+ "swap_verification": {
+  "by_obligation": {
+   "COF-FEE": {
+    "VERIFIED": 106
+   },
+   "COF-POST": {
+    "VERIFIED": 106
+   },
+   "COF-PRICE": {
+    "VERIFIED": 106
+   },
+   "COF-SURGE": {
+    "NOT_APPLICABLE": 106
+   }
+  },
+  "chain_head": "0ff5d8f24318983aaadc341ec10d68357706cda45eb296f551b2ce858f5517bf",
+  "reserve_checks": {
+   "INVALID": 0,
+   "VERIFIED": 232,
+   "examples": [],
+   "skipped_truncated_logs": 1
+  },
+  "results": {
+   "VERIFIED": 106
+  },
+  "swaps": 106
  },
  "undecodable_items": 0
 }

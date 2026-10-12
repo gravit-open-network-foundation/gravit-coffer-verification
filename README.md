@@ -1,6 +1,6 @@
 # Gravit × Coffer — independent verification of programmable liquidity
 
-**Experiment C-01 · profile `COFFER-RM-01` · status: research, read-only**
+**Experiments C-01 (profiles `COFFER-RM-01`, `COFFER-SWAP-01`) and C-02 (public metrics) · status: research, read-only**
 
 [Coffer](https://docs.coffer.so) pools on Solana can be steered by a **range manager**: an
 external actor (often automated) that changes virtual balances and token weights. The pool
@@ -36,6 +36,34 @@ interface description (IDL `cubic_pool` 0.5.1, shipped in the MIT-licensed `@cof
 1.3.1, vendored in `coffer_verify/idl/` with its licence); for example, leverage is
 `virtual_balance / actual_balance`, and percentage caps are relative to the current value.
 
+## Swaps and reserves (`COFFER-SWAP-01`)
+
+Every swap is re-computed from the pool state just before it, with an exact integer port of
+the program's math (`coffer_verify/math.py`, ported line by line from the MIT-licensed SDK):
+
+| ID | Obligation |
+|---|---|
+| COF-PRICE | amount out equals the weighted constant-product result on virtual balances |
+| COF-FEE | base fee (rounded up) and protocol share equal the event |
+| COF-SURGE | sell-off window advanced and dynamic (surge) fee re-computed equal the event |
+| COF-POST | predicted virtual, actual and protocol-fee balances equal the program's own post-state log |
+| COF-RESERVE | each pool vault holds exactly actual balance + protocol fees owed |
+
+Solana caps transaction logs; when a transaction's log is truncated, events after the cut
+are lost. Such swaps are `INSUFFICIENT`, and the state is re-synchronised from the next log.
+
+## Public metrics (C-02)
+
+`python -m coffer_verify.metrics tvl` and `... volume START END` recompute TVL and swap volume
+from the ledger. Token amounts are on-chain facts; USD values use Jupiter's public price API,
+recorded raw next to each result. A price feed is not on-chain evidence, and the result says so.
+
+## A second operator
+
+See [OPERATORS.md](OPERATORS.md): re-run, sign, and let the Gravit Verifier decide. Two
+independent operators make a Verified Fact; Coffer's own signature is recorded as the verified
+party's acknowledgement, not as independent evidence.
+
 ## Reproduce
 
 ```bash
@@ -58,5 +86,5 @@ byte differs.
   exact rational ones. A transition exactly at a cap boundary could differ by one unit.
 - One checker is one opinion. In Gravit terms this gives a *Probabilistic Assessment*; a
   *Verified Fact* needs a second, independent operator to re-run the check and sign the result.
-- Not covered yet: sell-off window and surge fee, swap price reproduction, reserve conservation,
-  emergency governance (planned profile items COF-08 … COF-10).
+- Not covered yet: emergency governance state machine; add/remove liquidity amounts; the
+  sell-off window is re-synchronised (not modelled) after liquidity changes.
