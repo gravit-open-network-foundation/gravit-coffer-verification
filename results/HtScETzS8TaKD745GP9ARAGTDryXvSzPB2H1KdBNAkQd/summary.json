@@ -3,6 +3,7 @@
  "evidence": {
   "file": "evidence/HtScETzS8TaKD745GP9ARAGTDryXvSzPB2H1KdBNAkQd/transactions.jsonl.gz",
   "first_slot": 451334709,
+  "from": "pool creation",
   "last_slot": 452287867,
   "transactions": 172
  },
@@ -57,7 +58,7 @@
  "final_state_matches_chain": {
   "differences": {},
   "result": "VERIFIED",
-  "snapshot_slot": 455739848
+  "snapshot_slot": 455927707
  },
  "pool": "HtScETzS8TaKD745GP9ARAGTDryXvSzPB2H1KdBNAkQd",
  "range_manager_updates": 3,

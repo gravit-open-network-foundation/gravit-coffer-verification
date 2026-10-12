@@ -112,7 +112,12 @@ def volume(start: int, end: int) -> dict:
                               "amount_out": e["amount_out"], "fee": e["fee_amount"], "ts": e["timestamp"]})
     mints = {m for s in swaps for m in (s["in"], s["out"])}
     dec, px = decimals(mints), prices(mints)
-    usd = lambda m, a: a / 10 ** dec[m] * px[m]["usdPrice"] if dec.get(m) is not None and m in px else None
+    ev_dir = ROOT / "evidence" / "metrics"
+    ev_dir.mkdir(parents=True, exist_ok=True)
+    (ev_dir / f"volume-{start}-{end}-prices.json").write_text(json.dumps(
+        {"fetched_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "decimals": dec, "prices_raw": px},
+        indent=1, sort_keys=True) + "\n")
+    usd = lambda m, a: a / 10 ** dec[m] * px[m]["usdPrice"] if dec.get(m) is not None and (px.get(m) or {}).get("usdPrice") is not None else None
     total = stable_side = fees = 0.0
     unpriced = 0
     per_pool: dict = {}

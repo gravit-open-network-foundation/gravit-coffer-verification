@@ -18,5 +18,6 @@ jobs:
         run: python -m pytest -q
       - name: Results are reproducible from the committed evidence (byte for byte, no network)
         run: |
-          for d in evidence/*/; do python -m coffer_verify.run verify "$(basename "$d")"; done
-          git diff --exit-code results/
+          for d in evidence/*/; do if [ -f "$d/transactions.jsonl.gz" ]; then python -m coffer_verify.run verify "$(basename "$d")"; fi; done
+          python -m coffer_verify.report > /dev/null
+          git diff --exit-code results/ REPORT.md

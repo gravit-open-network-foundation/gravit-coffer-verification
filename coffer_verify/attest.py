@@ -46,14 +46,14 @@ def regenerate_and_compare() -> dict:
 
     before = {p: p.read_bytes() for p in (ROOT / "results").rglob("*") if p.is_file()}
     for d in sorted((ROOT / "evidence").iterdir()):
-        if d.is_dir():
+        if (d / "transactions.jsonl.gz").exists():
             verify(d.name)
     after = {p: p.read_bytes() for p in (ROOT / "results").rglob("*") if p.is_file()}
     if before != after:
         changed = sorted(str(p.relative_to(ROOT)) for p in set(before) | set(after) if before.get(p) != after.get(p))
         sys.exit(f"results differ from the committed ones, refusing to sign: {changed}")
     totals = {"VERIFIED": 0, "INVALID": 0, "CONFLICTING": 0, "INSUFFICIENT": 0, "NOT_APPLICABLE": 0}
-    for f in (ROOT / "results").rglob("*.jsonl"):
+    for f in (ROOT / "results").glob("*/*.jsonl"):
         for line in f.read_text().splitlines():
             for o in json.loads(line)["record"]["obligations"]:
                 totals[o["result"]] += 1

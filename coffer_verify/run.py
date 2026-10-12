@@ -29,9 +29,12 @@ def evidence_path(pool: str) -> Path:
     return ROOT / "evidence" / pool / "transactions.jsonl.gz"
 
 
-def fetch(pool: str) -> None:
+def fetch(pool: str, since: int = 0) -> None:
+    """since = 0: the pool's complete history; otherwise every transaction with blockTime >= since."""
     snap = account_snapshot(pool)  # read first: every transaction up to this slot is in the history below
-    sigs = [s for s in signatures(pool) if s["slot"] <= snap["slot"]]
+    sigs = [s for s in signatures(pool) if s["slot"] <= snap["slot"] and (s.get("blockTime") or 0) >= since
+            and (since == 0 or s["err"] is None)]  # windowed evidence: successful transactions only
+    snap["evidence_from_unix_time"] = since
     txs = []
     for i, s in enumerate(sigs):
         txs.append(fetch_transaction(s["signature"], CACHE))
@@ -93,11 +96,14 @@ def write_chain(path: Path, records: list) -> str:
 
 def verify(pool: str) -> int:
     txs = load(pool)
-    out = replay(pool, txs)
+    acc_path = evidence_path(pool).parent / "account.json"
+    snap = json.loads(acc_path.read_text()) if acc_path.exists() else None
+    from_genesis = not snap or not snap.get("evidence_from_unix_time")
+    acc = DEC.struct("CubicPool", base64.b64decode(snap["data"]), 8)[0] if snap else None
+    out = replay(pool, txs, acc, from_genesis)
     d = ROOT / "results" / pool
     d.mkdir(parents=True, exist_ok=True)
     prev = write_chain(d / "records.jsonl", out["records"])
-    acc_path = evidence_path(pool).parent / "account.json"
     sw = verify_swaps(pool, txs, json.loads(acc_path.read_text())["data"]) if acc_path.exists() else None
     swap_summary = None
     if sw is not None:
@@ -115,11 +121,13 @@ def verify(pool: str) -> int:
     counts = {}
     for rec in out["records"]:
         counts[rec["final"]] = counts.get(rec["final"], 0) + 1
-    final_check = cross_check(pool, out["final_state"])
+    final_check = cross_check(pool, out["final_state"]) if from_genesis else {
+        "result": "NOT_APPLICABLE", "detail": "evidence starts after pool creation; no full replay"}
     summary = {
         "final_state_matches_chain": final_check,
         "pool": pool,
         "evidence": {"file": str(evidence_path(pool).relative_to(ROOT)), "transactions": len(txs),
+                     "from": "pool creation" if from_genesis else snap["evidence_from_unix_time"],
                      "first_slot": txs[0]["slot"] if txs else None, "last_slot": txs[-1]["slot"] if txs else None},
         "range_manager_updates": len(out["records"]),
         "swap_verification": swap_summary,
@@ -143,4 +151,5 @@ def verify(pool: str) -> int:
 
 if __name__ == "__main__":
     cmd, pool = sys.argv[1], sys.argv[2]
-    raise SystemExit(fetch(pool) if cmd == "fetch" else verify(pool))
+    since = int(sys.argv[3]) if len(sys.argv) > 3 else 0
+    raise SystemExit(fetch(pool, since) if cmd == "fetch" else verify(pool))
