@@ -10,7 +10,7 @@ Gravit or Coffer systems.
 ```bash
 git clone <this repository> && cd gravit-coffer-verification
 python3.12 -m venv .venv
-git clone --depth 1 --branch v0.5.0 https://github.com/gravit-open-network-foundation/verifier.git .deps/verifier
+git clone --depth 1 --branch v0.6.0 https://github.com/gravit-open-network-foundation/verifier.git .deps/verifier
 .venv/bin/pip install -e .deps/verifier pytest
 .venv/bin/python -m pytest -q                       # adversarial and math tests
 for d in evidence/*/; do [ -f "$d/transactions.jsonl.gz" ] && .venv/bin/python -m coffer_verify.run verify "$(basename "$d")"; done
@@ -47,7 +47,7 @@ SHA-256 digest of the complete evidence and results bundle. Open a pull request 
 .venv/bin/python -m coffer_verify.attest decide <registry.json> <trust_root.json>
 ```
 
-The public Gravit Verifier v0.5.0 decides. With signed records from two operators that are
+The public Gravit Verifier v0.6.0 decides. With signed records from two operators that are
 listed in the registry and not under common control, the result is **Verified Fact**; with
 one, it stays a *Probabilistic Assessment*.
 
