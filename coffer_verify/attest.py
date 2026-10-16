@@ -10,7 +10,7 @@ Second-operator kit: re-run C-01, sign the result, and let the Gravit Verifier d
 unless they are byte-identical to the committed ones; it then signs one
 Gravit evidence record over the digest of the whole evidence + results bundle.
 
-`decide` feeds the attestations to the public Gravit Verifier (v0.5.0) and asks
+`decide` feeds the attestations to the public Gravit Verifier (v0.6.0) and asks
 for "Verified Fact". Profile rule: an attestation by the verified party itself
 (--relation subject, e.g. Coffer) confirms reproducibility but is NOT counted as
 independent evidence - a protocol cannot independently verify itself.
