@@ -12,10 +12,18 @@ reproduce the results byte for byte; CI does exactly that.
 import gzip
 import io
 import json
+import os
 import sys
 from pathlib import Path
 
 import base64
+
+# The program (v5 or v6) is chosen when .chain is imported. For `verify`, take it from the
+# committed account snapshot, so that a plain loop over evidence/ needs no settings.
+if __name__ == "__main__" and len(sys.argv) > 2 and "COFFER_PROGRAM" not in os.environ:
+    _snap = Path(__file__).resolve().parent.parent / "evidence" / sys.argv[2] / "account.json"
+    if _snap.exists():
+        os.environ["COFFER_PROGRAM"] = json.loads(_snap.read_text()).get("owner", "")
 
 from .chain import DEC, account_snapshot, fetch_transaction, signatures
 from .swaps import verify_swaps

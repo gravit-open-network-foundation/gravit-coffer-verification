@@ -79,7 +79,7 @@ actions (who changed fees, who became admin, whether any debug or withdrawal fun
 called) and a continuous observer with alerts.
 
 ```bash
-COFFER_PROGRAM=6DhW1Ek5WLJSnFSpBBGYeVRbRiWtCXHbqyGJ6LcVZgH9 python3 -m coffer_verify.run verify HGbQ74sgfvyhyEBgPwtKBge2HFcnZbHXTCSA2QdBTHA3
+python3 -m coffer_verify.run verify HGbQ74sgfvyhyEBgPwtKBge2HFcnZbHXTCSA2QdBTHA3   # program taken from evidence/<pool>/account.json
 ```
 
 ## A second operator

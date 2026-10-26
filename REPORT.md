@@ -7,8 +7,8 @@ reproduced by CI from the committed evidence. This is not a security audit.
 ## Summary
 
 - Range-manager transitions checked: **6** — (6 verified)
-- Swaps re-computed (price, fees, surge fee, post-state): **20910** — (12 insufficient, 20898 verified)
-- Pool vault balance = LP reserves + protocol fees: **41921 of 41921** checks
+- Swaps re-computed (price, fees, surge fee, post-state): **20915** — (12 insufficient, 20903 verified)
+- Pool vault balance = LP reserves + protocol fees: **41953 of 41953** checks
 
 `INSUFFICIENT` means the ledger did not contain enough data to decide (for example Solana
 truncated a transaction's logs); it is never counted as verified.
@@ -20,6 +20,7 @@ truncated a transaction's logs); it is never counted as verified.
 | `2LCwQQg4…` | 197 | pool creation | 0  | 147 (147 verified) | 297/297 | VERIFIED |
 | `3YixTPPZ…` | 1195 | since 2026-09-11 | 0  | 1193 (1 insufficient, 1192 verified) | 2398/2398 | NOT_APPLICABLE |
 | `3fZjF8by…` | 113 | since 2026-09-11 | 0  | 113 (1 insufficient, 112 verified) | 226/226 | NOT_APPLICABLE |
+| `4nKuFAyL…` | 8 | pool creation | 0  | 0  | 0/0 | VERIFIED |
 | `5dDezuao…` | 728 | since 2026-09-11 | 0  | 729 (1 insufficient, 728 verified) | 1460/1460 | NOT_APPLICABLE |
 | `6NjpZAqu…` | 1579 | since 2026-09-11 | 0  | 1582 (3 insufficient, 1579 verified) | 3162/3162 | NOT_APPLICABLE |
 | `7nXr8T7i…` | 1391 | pool creation | 0  | 1230 (1230 verified) | 2463/2463 | VERIFIED |
@@ -29,8 +30,10 @@ truncated a transaction's logs); it is never counted as verified.
 | `CzPEgwuu…` | 621 | pool creation | 0  | 512 (512 verified) | 1030/1030 | VERIFIED |
 | `EFfVk5qc…` | 598 | since 2026-09-11 | 0  | 595 (1 insufficient, 594 verified) | 1202/1202 | NOT_APPLICABLE |
 | `EjKEqyGR…` | 2 | pool creation | 0  | 0  | 0/0 | VERIFIED |
+| `Eyf6zRCB…` | 10 | pool creation | 0  | 0  | 12/12 | VERIFIED |
 | `GZMLo9ok…` | 4 | pool creation | 0  | 0  | 6/6 | VERIFIED |
 | `GkMm2ZdB…` | 113 | since 2026-09-11 | 0  | 113 (1 insufficient, 112 verified) | 226/226 | NOT_APPLICABLE |
+| `HGbQ74sg…` | 17 | pool creation | 0  | 5 (5 verified) | 20/20 | VERIFIED |
 | `HtScETzS…` | 172 | pool creation | 3 (3 verified) | 106 (106 verified) | 232/232 | VERIFIED |
 | `HwDbGNHp…` | 782 | pool creation | 3 (3 verified) | 631 (2 insufficient, 629 verified) | 1260/1260 | VERIFIED |
 
