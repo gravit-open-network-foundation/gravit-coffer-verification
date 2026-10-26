@@ -230,7 +230,7 @@ def replay(pool: str, txs: List[Dict[str, Any]], acc: Optional[Dict[str, Any]] =
                 rec = {
                     "protocol": "Coffer",
                     "verification_profile": "COFFER-RM-01",
-                    "program": {"id": PROGRAM_ID, "idl": "cubic_pool 0.5.1", "idl_sha256": IDL_SHA256},
+                    "program": {"id": PROGRAM_ID, "idl": "cubic_pool 0.5.1" + (" v6" if "v6" in IDL_PATH.name else ""), "idl_sha256": IDL_SHA256},
                     "pool": pool,
                     "transition": {"signature": sig, "slot": tx["slot"], "unix_timestamp": ts,
                                    "manager": ix["accounts"]["authority"]["key"], "tx_sha256": sha256_json(tx)},

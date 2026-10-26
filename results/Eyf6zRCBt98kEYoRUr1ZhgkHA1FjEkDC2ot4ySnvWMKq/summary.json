@@ -1,0 +1,67 @@
+{
+ "chain_head": "0000000000000000000000000000000000000000000000000000000000000000",
+ "evidence": {
+  "file": "evidence/Eyf6zRCBt98kEYoRUr1ZhgkHA1FjEkDC2ot4ySnvWMKq/transactions.jsonl.gz",
+  "first_slot": 458922933,
+  "from": "pool creation",
+  "last_slot": 461712812,
+  "transactions": 10
+ },
+ "final_state": {
+  "actual_balances": [
+   557762268,
+   351314142,
+   172450085,
+   225710355,
+   329337743,
+   461611191
+  ],
+  "config": {
+   "max_leverage_bps": 0,
+   "max_vb_change_pct": 0,
+   "max_weight_change_pct": 0,
+   "min_leverage_bps": 0,
+   "min_update_interval_secs": 0
+  },
+  "enabled": false,
+  "last_update": 0,
+  "range_manager": "11111111111111111111111111111111",
+  "virtual_balances": [
+   1673286804,
+   1053942426,
+   517350255,
+   677131065,
+   988013229,
+   1384833573
+  ],
+  "weights": [
+   1667,
+   1667,
+   1667,
+   1667,
+   1666,
+   1666
+  ]
+ },
+ "final_state_matches_chain": {
+  "differences": {},
+  "result": "VERIFIED",
+  "snapshot_slot": 461789451
+ },
+ "pool": "Eyf6zRCBt98kEYoRUr1ZhgkHA1FjEkDC2ot4ySnvWMKq",
+ "range_manager_updates": 0,
+ "rejected_by_program": [],
+ "results": {},
+ "swap_verification": {
+  "by_obligation": {},
+  "chain_head": "0000000000000000000000000000000000000000000000000000000000000000",
+  "reserve_checks": {
+   "INVALID": 0,
+   "VERIFIED": 12,
+   "examples": []
+  },
+  "results": {},
+  "swaps": 0
+ },
+ "undecodable_items": 0
+}
