@@ -14,11 +14,13 @@ from typing import Any, Dict, List, Optional, Tuple
 
 from .borsh import B58, Dec
 
-IDL_PATH = Path(__file__).resolve().parent / "idl" / "cubic_pool-0.5.1.json"
+V6_PROGRAM = "6DhW1Ek5WLJSnFSpBBGYeVRbRiWtCXHbqyGJ6LcVZgH9"
+# v6 (RWA index pools) adds trailing event fields (Swap transfer fees, PoolInitialized pool_id,
+# RangeManagerConfigSet min leverage); IDL from coffer-so/sdk branch feature/sdk-v6 (MIT).
+IDL_PATH = Path(__file__).resolve().parent / "idl" / (
+    "cubic_pool-0.5.1-v6.json" if os.environ.get("COFFER_PROGRAM") == V6_PROGRAM else "cubic_pool-0.5.1.json")
 IDL = json.loads(IDL_PATH.read_text())
-# The RWA index pools run the same interface (IDL cubic_pool 0.5.1, @coffer_so/sdk 1.4.0) under a
-# new program address; COFFER_PROGRAM selects it.
-PROGRAM_ID = os.environ.get("COFFER_PROGRAM", IDL["address"])
+PROGRAM_ID = IDL["address"]   # COFFER_PROGRAM selects v5 (default) or v6
 DEC = Dec(IDL)
 EVENTS = {bytes(e["discriminator"]): e["name"] for e in IDL["events"]}
 INSTRUCTIONS = {bytes(i["discriminator"]): i for i in IDL["instructions"]}

@@ -60,9 +60,12 @@ recorded raw next to each result. A price feed is not on-chain evidence, and the
 
 ## RWA index pools (C-03, first replay, 26 Oct 2026)
 
-Coffer's RWA index pools run the same interface (IDL `cubic_pool` 0.5.1, shipped unchanged in
-`@coffer_so/sdk` 1.4.0) under a new program, `6DhW1Ek5WLJSnFSpBBGYeVRbRiWtCXHbqyGJ6LcVZgH9`.
-Set `COFFER_PROGRAM` to that address and the same checks apply. Three pools exist on it:
+Coffer's RWA index pools run contract version v6 under a new program,
+`6DhW1Ek5WLJSnFSpBBGYeVRbRiWtCXHbqyGJ6LcVZgH9`. Its interface (IDL `cubic_pool` 0.5.1 from the
+MIT-licensed `coffer-so/sdk`, branch `feature/sdk-v6`, vendored as `cubic_pool-0.5.1-v6.json`) adds
+trailing event fields (swap transfer fees, pool id, minimum leverage). Set `COFFER_PROGRAM` to that
+address and the v6 IDL is used. Coffer confirmed two live v6 indexes, xStocks5 (`HGbQ…`) and
+BigTech (`Eyf6…`); `4nKu…` is not listed in the app. Three pools exist on the program:
 
 | Pool | Tokens | History | Result |
 |---|---|---|---|
