@@ -58,6 +58,27 @@ are lost. Such swaps are `INSUFFICIENT`, and the state is re-synchronised from t
 from the ledger. Token amounts are on-chain facts; USD values use Jupiter's public price API,
 recorded raw next to each result. A price feed is not on-chain evidence, and the result says so.
 
+## RWA index pools (C-03, first replay, 26 Oct 2026)
+
+Coffer's RWA index pools run the same interface (IDL `cubic_pool` 0.5.1, shipped unchanged in
+`@coffer_so/sdk` 1.4.0) under a new program, `6DhW1Ek5WLJSnFSpBBGYeVRbRiWtCXHbqyGJ6LcVZgH9`.
+Set `COFFER_PROGRAM` to that address and the same checks apply. Three pools exist on it:
+
+| Pool | Tokens | History | Result |
+|---|---|---|---|
+| `HGbQ74sgfvyhyEBgPwtKBge2HFcnZbHXTCSA2QdBTHA3` | NVDAx, GOOGLx, TSLAx, MSTRx, CRCLx | 2 liquidity adds, 5 swaps, pool admin transfer | 5 swaps VERIFIED, 20 reserve checks VERIFIED, final state matches chain |
+| `4nKuFAyLARPCmSNZzdU3K9X4tfy3XvaZbQ4iqzKSx4Ta` | NVDAx, GOOGLx, TSLAx, MSTRx, CRCLx | no liquidity, enabled/disabled 4 times | final state matches chain |
+| `Eyf6zRCBt98kEYoRUr1ZhgkHA1FjEkDC2ot4ySnvWMKq` | NVDAx, GOOGLx, METAx, MSFTx, TSLAx, AMZNx | 2 liquidity adds, no swaps yet | 12 reserve checks VERIFIED, final state matches chain |
+
+These pools run on contracts that Coffer marks as not yet audited. This replay is not an audit;
+it checks that what happened on chain agrees with the pool's own rules. Next: rules for admin
+actions (who changed fees, who became admin, whether any debug or withdrawal function was
+called) and a continuous observer with alerts.
+
+```bash
+COFFER_PROGRAM=6DhW1Ek5WLJSnFSpBBGYeVRbRiWtCXHbqyGJ6LcVZgH9 python3 -m coffer_verify.run verify HGbQ74sgfvyhyEBgPwtKBge2HFcnZbHXTCSA2QdBTHA3
+```
+
 ## A second operator
 
 See [OPERATORS.md](OPERATORS.md): re-run, sign, and let the Gravit Verifier decide. Two
