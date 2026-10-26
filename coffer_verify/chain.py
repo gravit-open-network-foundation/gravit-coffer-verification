@@ -7,6 +7,7 @@ router are never used as evidence - they are indexing/presentation layers.
 import base64
 import json
 import time
+import os
 import urllib.request
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
@@ -15,7 +16,9 @@ from .borsh import B58, Dec
 
 IDL_PATH = Path(__file__).resolve().parent / "idl" / "cubic_pool-0.5.1.json"
 IDL = json.loads(IDL_PATH.read_text())
-PROGRAM_ID = IDL["address"]
+# The RWA index pools run the same interface (IDL cubic_pool 0.5.1, @coffer_so/sdk 1.4.0) under a
+# new program address; COFFER_PROGRAM selects it.
+PROGRAM_ID = os.environ.get("COFFER_PROGRAM", IDL["address"])
 DEC = Dec(IDL)
 EVENTS = {bytes(e["discriminator"]): e["name"] for e in IDL["events"]}
 INSTRUCTIONS = {bytes(i["discriminator"]): i for i in IDL["instructions"]}

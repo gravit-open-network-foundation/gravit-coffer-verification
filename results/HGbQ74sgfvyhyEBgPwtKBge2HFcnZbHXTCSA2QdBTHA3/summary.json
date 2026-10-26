@@ -1,0 +1,79 @@
+{
+ "chain_head": "0000000000000000000000000000000000000000000000000000000000000000",
+ "evidence": {
+  "file": "evidence/HGbQ74sgfvyhyEBgPwtKBge2HFcnZbHXTCSA2QdBTHA3/transactions.jsonl.gz",
+  "first_slot": 455267092,
+  "from": "pool creation",
+  "last_slot": 461746130,
+  "transactions": 17
+ },
+ "final_state": {
+  "actual_balances": [
+   151554604,
+   63671628,
+   60675707,
+   111029626,
+   201456777
+  ],
+  "config": {
+   "max_leverage_bps": 0,
+   "max_vb_change_pct": 0,
+   "max_weight_change_pct": 0,
+   "min_leverage_bps": 0,
+   "min_update_interval_secs": 0
+  },
+  "enabled": false,
+  "last_update": 0,
+  "range_manager": "11111111111111111111111111111111",
+  "virtual_balances": [
+   451196329,
+   194089044,
+   181000099,
+   333088878,
+   605286471
+  ],
+  "weights": [
+   3000,
+   2000,
+   2000,
+   1500,
+   1500
+  ]
+ },
+ "final_state_matches_chain": {
+  "differences": {},
+  "result": "VERIFIED",
+  "snapshot_slot": 461789287
+ },
+ "pool": "HGbQ74sgfvyhyEBgPwtKBge2HFcnZbHXTCSA2QdBTHA3",
+ "range_manager_updates": 0,
+ "rejected_by_program": [],
+ "results": {},
+ "swap_verification": {
+  "by_obligation": {
+   "COF-FEE": {
+    "VERIFIED": 5
+   },
+   "COF-POST": {
+    "VERIFIED": 5
+   },
+   "COF-PRICE": {
+    "VERIFIED": 5
+   },
+   "COF-SURGE": {
+    "NOT_APPLICABLE": 5
+   }
+  },
+  "chain_head": "04261b8e0680552149f8b3c11b7460cbac510bc1cfd6a425fb7cab5ad9023b38",
+  "reserve_checks": {
+   "INVALID": 0,
+   "VERIFIED": 20,
+   "examples": []
+  },
+  "results": {
+   "VERIFIED": 5
+  },
+  "swaps": 5
+ },
+ "undecodable_items": 0
+}
