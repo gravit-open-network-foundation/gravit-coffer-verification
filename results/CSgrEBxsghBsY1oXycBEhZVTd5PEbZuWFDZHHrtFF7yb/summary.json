@@ -1,23 +1,34 @@
 {
+ "admin_actions": {
+  "actions": 3,
+  "admin_now": null,
+  "alerts": 0,
+  "by_obligation": {
+   "COF-ADM-PROTO": {
+    "RECORDED": 3
+   }
+  },
+  "chain_head": "f4f8ea0df9ba883020119dc3f3401bbf78bf2ab7196937b4252dbaf0ad10c6d5"
+ },
  "chain_head": "0000000000000000000000000000000000000000000000000000000000000000",
  "evidence": {
   "file": "evidence/CSgrEBxsghBsY1oXycBEhZVTd5PEbZuWFDZHHrtFF7yb/transactions.jsonl.gz",
   "first_slot": 446279593,
   "from": 1789164000,
-  "last_slot": 455902230,
-  "transactions": 5432
+  "last_slot": 461814606,
+  "transactions": 6478
  },
  "final_state": {
   "actual_balances": [
-   1117312298,
-   7036555223,
-   275767691,
-   730278235114,
+   815537974,
+   6891967782,
+   679093955,
+   1007811215457,
    4643,
-   249425245,
-   15192915462492,
-   1769531366,
-   50038912842
+   257752496,
+   15486341561028,
+   2150715380,
+   47059160854
   ],
   "config": {
    "max_leverage_bps": 0,
@@ -30,15 +41,15 @@
   "last_update": 0,
   "range_manager": "6NAL3YafKj9NPv3bkvdTxph33VGM9ayoJRNaTeBhTAaz",
   "virtual_balances": [
-   2793238145,
-   20120041767,
-   2448069066,
-   1570344256294,
+   2491463821,
+   19975454326,
+   2851395330,
+   1847877236637,
    496700904,
-   465343434,
-   25882838113456,
-   4027042560,
-   95599815760
+   473670685,
+   26176264211992,
+   4408226574,
+   92620063772
   ],
   "weights": [
    2500,
@@ -63,32 +74,32 @@
  "swap_verification": {
   "by_obligation": {
    "COF-FEE": {
-    "VERIFIED": 5438
+    "VERIFIED": 6481
    },
    "COF-POST": {
     "INSUFFICIENT": 1,
-    "VERIFIED": 5437
+    "VERIFIED": 6480
    },
    "COF-PRICE": {
     "INSUFFICIENT": 1,
-    "VERIFIED": 5437
+    "VERIFIED": 6480
    },
    "COF-SURGE": {
-    "NOT_APPLICABLE": 4978,
-    "VERIFIED": 459
+    "NOT_APPLICABLE": 5915,
+    "VERIFIED": 565
    }
   },
-  "chain_head": "576955cada341edc12e6301c8d3b3000c1d3f102ffcf7d615ee91d8783790ee6",
+  "chain_head": "a0eca0ceee61efc6fa8559e4f206034e8b0fcb3a69b5077cb151cdec0b9fecd0",
   "reserve_checks": {
    "INVALID": 0,
-   "VERIFIED": 10887,
+   "VERIFIED": 12973,
    "examples": []
   },
   "results": {
    "INSUFFICIENT": 1,
-   "VERIFIED": 5437
+   "VERIFIED": 6480
   },
-  "swaps": 5438
+  "swaps": 6481
  },
  "undecodable_items": 0
 }

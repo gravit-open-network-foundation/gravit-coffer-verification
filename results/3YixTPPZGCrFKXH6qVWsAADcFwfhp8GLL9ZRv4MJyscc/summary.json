@@ -1,18 +1,32 @@
 {
+ "admin_actions": {
+  "actions": 5,
+  "admin_now": null,
+  "alerts": 0,
+  "by_obligation": {
+   "COF-ADM-AUTH": {
+    "INSUFFICIENT": 1
+   },
+   "COF-ADM-PROTO": {
+    "RECORDED": 4
+   }
+  },
+  "chain_head": "57d70b34ab7040a3f3de1214644557567b5905987e16d3c40301f77096b69878"
+ },
  "chain_head": "0000000000000000000000000000000000000000000000000000000000000000",
  "evidence": {
   "file": "evidence/3YixTPPZGCrFKXH6qVWsAADcFwfhp8GLL9ZRv4MJyscc/transactions.jsonl.gz",
   "first_slot": 446812733,
   "from": 1789164000,
-  "last_slot": 455923047,
-  "transactions": 1195
+  "last_slot": 461775665,
+  "transactions": 4235
  },
  "final_state": {
   "actual_balances": [
-   2905905,
-   442,
-   14349,
-   9834556
+   690554,
+   114,
+   673,
+   2551757
   ],
   "config": {
    "max_leverage_bps": 0,
@@ -25,10 +39,10 @@
   "last_update": 0,
   "range_manager": "11111111111111111111111111111111",
   "virtual_balances": [
-   11490924008,
-   11488133472,
-   8855363967,
-   3551201450
+   2926993867,
+   2966049196,
+   2255700154,
+   904632817
   ],
   "weights": [
    3250,
@@ -48,31 +62,32 @@
  "swap_verification": {
   "by_obligation": {
    "COF-FEE": {
-    "VERIFIED": 1193
+    "VERIFIED": 1467
    },
    "COF-POST": {
-    "INSUFFICIENT": 1,
-    "VERIFIED": 1192
+    "INSUFFICIENT": 2,
+    "VERIFIED": 1465
    },
    "COF-PRICE": {
-    "INSUFFICIENT": 1,
-    "VERIFIED": 1192
+    "INSUFFICIENT": 2,
+    "VERIFIED": 1465
    },
    "COF-SURGE": {
-    "NOT_APPLICABLE": 1192
+    "NOT_APPLICABLE": 1465
    }
   },
-  "chain_head": "cfdcc8ed5ddcbaedd7b755116e76b4ad2d9d2dc74ab569ace3d5e49d96df9285",
+  "chain_head": "4d871058ddd978cc8df235a75f9029a0cd92f9122ed9191ff2700f4ef0ce49e2",
   "reserve_checks": {
    "INVALID": 0,
-   "VERIFIED": 2398,
-   "examples": []
+   "VERIFIED": 13986,
+   "examples": [],
+   "skipped_truncated_logs": 1
   },
   "results": {
-   "INSUFFICIENT": 1,
-   "VERIFIED": 1192
+   "INSUFFICIENT": 2,
+   "VERIFIED": 1465
   },
-  "swaps": 1193
+  "swaps": 1467
  },
  "undecodable_items": 0
 }

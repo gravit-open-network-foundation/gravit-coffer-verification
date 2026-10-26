@@ -14,6 +14,7 @@ def ts(t: int) -> str:
 
 def main() -> None:
     rows, rm_tot, sw_tot, res_tot = [], {}, {}, {"VERIFIED": 0, "INVALID": 0}
+    adm_tot, alerts = {}, 0
     for f in sorted((ROOT / "results").glob("*/summary.json")):
         s = json.loads(f.read_text())
         sw = s.get("swap_verification") or {}
@@ -24,6 +25,11 @@ def main() -> None:
         rc = sw.get("reserve_checks") or {}
         res_tot["VERIFIED"] += rc.get("VERIFIED", 0)
         res_tot["INVALID"] += rc.get("INVALID", 0)
+        adm = s.get("admin_actions") or {}
+        alerts += adm.get("alerts", 0)
+        for ob in (adm.get("by_obligation") or {}).values():
+            for k, v in ob.items():
+                adm_tot[k] = adm_tot.get(k, 0) + v
         frm = s["evidence"].get("from", "pool creation")
         rows.append(f"| `{s['pool'][:8]}…` | {s['evidence']['transactions']} | "
                     f"{frm if isinstance(frm, str) else 'since ' + ts(frm)} | "
@@ -47,9 +53,13 @@ def main() -> None:
         f"- Swaps re-computed (price, fees, surge fee, post-state): **{sum(sw_tot.values())}** — {fmt(sw_tot)}",
         f"- Pool vault balance = LP reserves + protocol fees: **{res_tot['VERIFIED']} of "
         f"{res_tot['VERIFIED'] + res_tot['INVALID']}** checks",
+        f"- Admin and protocol actions (COFFER-ADM-01): **{sum(adm_tot.values())}** — {fmt(adm_tot)}; "
+        f"debug or withdrawal calls: **{alerts}**",
         "",
         "`INSUFFICIENT` means the ledger did not contain enough data to decide (for example Solana",
-        "truncated a transaction's logs); it is never counted as verified.",
+        "truncated a transaction's logs, or a pool was created by an earlier program version whose",
+        "events the current IDL cannot decode); it is never counted as verified. `RECORDED` actions",
+        "are listed with their signer, not judged.",
         "",
         "## Per pool",
         "",

@@ -1,0 +1,65 @@
+{
+ "admin_actions": {
+  "actions": 4,
+  "admin_now": "FUREz59r5rsNRc1e4n8AHbjby6SkgrmMkTWpRw7RwSSv",
+  "alerts": 0,
+  "by_obligation": {
+   "COF-ADM-AUTH": {
+    "RECORDED": 1
+   },
+   "COF-ADM-PROTO": {
+    "RECORDED": 3
+   }
+  },
+  "chain_head": "0b597505ca70d11b68dbc565b9e132465d536302d2ed1c022aa76ee18ae83560"
+ },
+ "chain_head": "0000000000000000000000000000000000000000000000000000000000000000",
+ "evidence": {
+  "file": "evidence/6CovdqUpRWh4yKbuRuTSuTws97ZwKcLfE223rJsmQkVG/transactions.jsonl.gz",
+  "first_slot": 441078893,
+  "from": "pool creation",
+  "last_slot": 461661364,
+  "transactions": 29
+ },
+ "final_state": {
+  "actual_balances": null,
+  "config": {
+   "max_leverage_bps": 0,
+   "max_vb_change_pct": 0,
+   "max_weight_change_pct": 0,
+   "min_leverage_bps": 0,
+   "min_update_interval_secs": 0
+  },
+  "enabled": false,
+  "last_update": 0,
+  "range_manager": "11111111111111111111111111111111",
+  "virtual_balances": null,
+  "weights": null
+ },
+ "final_state_matches_chain": {
+  "differences": {},
+  "not_reconstructed": [
+   "actual_balances",
+   "virtual_balances",
+   "weights"
+  ],
+  "result": "INSUFFICIENT",
+  "snapshot_slot": 461806044
+ },
+ "pool": "6CovdqUpRWh4yKbuRuTSuTws97ZwKcLfE223rJsmQkVG",
+ "range_manager_updates": 0,
+ "rejected_by_program": [],
+ "results": {},
+ "swap_verification": {
+  "by_obligation": {},
+  "chain_head": "0000000000000000000000000000000000000000000000000000000000000000",
+  "reserve_checks": {
+   "INVALID": 0,
+   "VERIFIED": 0,
+   "examples": []
+  },
+  "results": {},
+  "swaps": 0
+ },
+ "undecodable_items": 6
+}

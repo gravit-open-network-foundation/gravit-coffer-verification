@@ -1,17 +1,31 @@
 {
+ "admin_actions": {
+  "actions": 5,
+  "admin_now": "6NAL3YafKj9NPv3bkvdTxph33VGM9ayoJRNaTeBhTAaz",
+  "alerts": 0,
+  "by_obligation": {
+   "COF-ADM-AUTH": {
+    "RECORDED": 1
+   },
+   "COF-ADM-PROTO": {
+    "RECORDED": 4
+   }
+  },
+  "chain_head": "5bcbe24eb739f3aaf46b45711c894f155810a2a4410efdd0715b42938c4e50a9"
+ },
  "chain_head": "0000000000000000000000000000000000000000000000000000000000000000",
  "evidence": {
   "file": "evidence/2LCwQQg4gYAunZuA6ajUBFyR4jeFkqgzi3T1ffZziJEe/transactions.jsonl.gz",
   "first_slot": 452306530,
   "from": "pool creation",
-  "last_slot": 455918006,
-  "transactions": 197
+  "last_slot": 461772094,
+  "transactions": 527
  },
  "final_state": {
   "actual_balances": [
-   944651282,
-   73308,
-   4272357
+   1203959717,
+   42117,
+   5059557
   ],
   "config": {
    "max_leverage_bps": 0,
@@ -24,9 +38,9 @@
   "last_update": 0,
   "range_manager": "11111111111111111111111111111111",
   "virtual_balances": [
-   8234651282,
-   1099308,
-   36177357
+   9061197765,
+   1147958,
+   39447104
   ],
   "weights": [
    3333,
@@ -37,7 +51,7 @@
  "final_state_matches_chain": {
   "differences": {},
   "result": "VERIFIED",
-  "snapshot_slot": 455918726
+  "snapshot_slot": 461795422
  },
  "pool": "2LCwQQg4gYAunZuA6ajUBFyR4jeFkqgzi3T1ffZziJEe",
  "range_manager_updates": 0,
@@ -46,28 +60,28 @@
  "swap_verification": {
   "by_obligation": {
    "COF-FEE": {
-    "VERIFIED": 147
+    "VERIFIED": 342
    },
    "COF-POST": {
-    "VERIFIED": 147
+    "VERIFIED": 342
    },
    "COF-PRICE": {
-    "VERIFIED": 147
+    "VERIFIED": 342
    },
    "COF-SURGE": {
-    "NOT_APPLICABLE": 147
+    "NOT_APPLICABLE": 342
    }
   },
-  "chain_head": "71c88ffe6bb2608c6085a35f7c966b363ba13be7be4916735011812b35de3c08",
+  "chain_head": "52d4e36ac07b02653856d965eaa9082cfeff73528ede3c77359d81a73ee6903f",
   "reserve_checks": {
    "INVALID": 0,
-   "VERIFIED": 297,
+   "VERIFIED": 693,
    "examples": []
   },
   "results": {
-   "VERIFIED": 147
+   "VERIFIED": 342
   },
-  "swaps": 147
+  "swaps": 342
  },
  "undecodable_items": 0
 }

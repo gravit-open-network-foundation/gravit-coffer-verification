@@ -1,17 +1,31 @@
 {
+ "admin_actions": {
+  "actions": 5,
+  "admin_now": "4vPXU53SbsgsDjcpS4T2UQvsZShZcEEMTSvjxoTHUKRn",
+  "alerts": 0,
+  "by_obligation": {
+   "COF-ADM-AUTH": {
+    "RECORDED": 1
+   },
+   "COF-ADM-PROTO": {
+    "RECORDED": 4
+   }
+  },
+  "chain_head": "c6af43847d816f01e5d35abf76fa2da22d85a494288cd8392f1eaff949e4007e"
+ },
  "chain_head": "0000000000000000000000000000000000000000000000000000000000000000",
  "evidence": {
   "file": "evidence/7nXr8T7iDXwi2bB1LzH3uEZheDth5LQYC4DvefkPJkHy/transactions.jsonl.gz",
   "first_slot": 452280565,
   "from": "pool creation",
-  "last_slot": 455919391,
-  "transactions": 1391
+  "last_slot": 461846431,
+  "transactions": 2300
  },
  "final_state": {
   "actual_balances": [
-   221713507,
-   2474515775,
-   362013958
+   0,
+   1747189045,
+   1412355059
   ],
   "config": {
    "max_leverage_bps": 0,
@@ -24,9 +38,9 @@
   "last_update": 0,
   "range_manager": "11111111111111111111111111111111",
   "virtual_balances": [
-   1571713507,
-   14084515775,
-   8572713958
+   1411861856,
+   13889201007,
+   9999298871
   ],
   "weights": [
    2500,
@@ -37,7 +51,7 @@
  "final_state_matches_chain": {
   "differences": {},
   "result": "VERIFIED",
-  "snapshot_slot": 455923553
+  "snapshot_slot": 461858088
  },
  "pool": "7nXr8T7iDXwi2bB1LzH3uEZheDth5LQYC4DvefkPJkHy",
  "range_manager_updates": 0,
@@ -46,28 +60,32 @@
  "swap_verification": {
   "by_obligation": {
    "COF-FEE": {
-    "VERIFIED": 1230
+    "VERIFIED": 2022
    },
    "COF-POST": {
-    "VERIFIED": 1230
+    "INSUFFICIENT": 1,
+    "VERIFIED": 2021
    },
    "COF-PRICE": {
-    "VERIFIED": 1230
+    "INSUFFICIENT": 1,
+    "VERIFIED": 2021
    },
    "COF-SURGE": {
-    "NOT_APPLICABLE": 1230
+    "NOT_APPLICABLE": 2021
    }
   },
-  "chain_head": "02ca93df60dc9659198c82b9a31c30f6d0825a00eca1e2101df292678cb34ee6",
+  "chain_head": "0dc1ffd8eef34b20b01150924410a2795a1be4bf3ec805df706db11e2caa72ab",
   "reserve_checks": {
    "INVALID": 0,
-   "VERIFIED": 2463,
-   "examples": []
+   "VERIFIED": 4045,
+   "examples": [],
+   "skipped_truncated_logs": 1
   },
   "results": {
-   "VERIFIED": 1230
+   "INSUFFICIENT": 1,
+   "VERIFIED": 2021
   },
-  "swaps": 1230
+  "swaps": 2022
  },
  "undecodable_items": 0
 }

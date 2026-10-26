@@ -1,17 +1,31 @@
 {
+ "admin_actions": {
+  "actions": 5,
+  "admin_now": "4vPXU53SbsgsDjcpS4T2UQvsZShZcEEMTSvjxoTHUKRn",
+  "alerts": 0,
+  "by_obligation": {
+   "COF-ADM-AUTH": {
+    "RECORDED": 1
+   },
+   "COF-ADM-PROTO": {
+    "RECORDED": 4
+   }
+  },
+  "chain_head": "a4ca9dcd2f7600b169adc771cc18c78b8837d283dba5999592309366e9e96ebc"
+ },
  "chain_head": "0000000000000000000000000000000000000000000000000000000000000000",
  "evidence": {
   "file": "evidence/CzPEgwuuaKm1oinoTLrvwLMHwsnEh4gNv27zKm7NXVem/transactions.jsonl.gz",
   "first_slot": 452276481,
   "from": "pool creation",
-  "last_slot": 455923056,
-  "transactions": 621
+  "last_slot": 461814647,
+  "transactions": 1392
  },
  "final_state": {
   "actual_balances": [
-   83207062,
-   1416899944,
-   9689835398108
+   11467,
+   1401991107,
+   12422419688912
   ],
   "config": {
    "max_leverage_bps": 0,
@@ -24,9 +38,9 @@
   "last_update": 0,
   "range_manager": "11111111111111111111111111111111",
   "virtual_balances": [
-   1431943885,
-   12881162944,
-   82425863554225
+   1348748290,
+   12866254107,
+   85158447845029
   ],
   "weights": [
    2500,
@@ -37,7 +51,7 @@
  "final_state_matches_chain": {
   "differences": {},
   "result": "VERIFIED",
-  "snapshot_slot": 455926912
+  "snapshot_slot": 461818772
  },
  "pool": "CzPEgwuuaKm1oinoTLrvwLMHwsnEh4gNv27zKm7NXVem",
  "range_manager_updates": 0,
@@ -46,28 +60,28 @@
  "swap_verification": {
   "by_obligation": {
    "COF-FEE": {
-    "VERIFIED": 512
+    "VERIFIED": 834
    },
    "COF-POST": {
-    "VERIFIED": 512
+    "VERIFIED": 834
    },
    "COF-PRICE": {
-    "VERIFIED": 512
+    "VERIFIED": 834
    },
    "COF-SURGE": {
-    "NOT_APPLICABLE": 512
+    "NOT_APPLICABLE": 834
    }
   },
-  "chain_head": "c16fb96d9f2d94b44573730a250cea8f16236d6d99235cca478f391e4610a3c4",
+  "chain_head": "16ffa17c894f5c79a7953b3003f891a51fca065da4ddfa259a50cf1f7c068502",
   "reserve_checks": {
    "INVALID": 0,
-   "VERIFIED": 1030,
+   "VERIFIED": 1674,
    "examples": []
   },
   "results": {
-   "VERIFIED": 512
+   "VERIFIED": 834
   },
-  "swaps": 512
+  "swaps": 834
  },
  "undecodable_items": 0
 }

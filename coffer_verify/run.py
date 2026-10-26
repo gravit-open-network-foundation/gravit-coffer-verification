@@ -25,6 +25,7 @@ if __name__ == "__main__" and len(sys.argv) > 2 and "COFFER_PROGRAM" not in os.e
     if _snap.exists():
         os.environ["COFFER_PROGRAM"] = json.loads(_snap.read_text()).get("owner", "")
 
+from .admin import admin_actions
 from .chain import DEC, account_snapshot, fetch_transaction, signatures
 from .swaps import verify_swaps
 from .verify import replay, sha256_json
@@ -59,6 +60,13 @@ def fetch(pool: str, since: int = 0) -> None:
     print(f"{pool}: {len(txs)} transactions up to slot {snap['slot']} -> {p.relative_to(ROOT)}")
 
 
+POOL_LEN = 1683  # CubicPool::LEN since v5; pools never migrated keep the older, shorter layout
+
+
+def legacy_layout(snap: dict) -> bool:
+    return len(base64.b64decode(snap["data"])) < POOL_LEN
+
+
 def load(pool: str):
     with gzip.open(evidence_path(pool), "rt") as f:
         return [json.loads(line) for line in f]
@@ -70,6 +78,8 @@ def cross_check(pool: str, fs: dict) -> dict:
     if not path.exists():
         return {"result": "INSUFFICIENT", "detail": "no account snapshot"}
     snap = json.loads(path.read_text())
+    if legacy_layout(snap):
+        return {"result": "INSUFFICIENT", "detail": "account in the pre-v5 layout (never migrated); not decodable with IDL 0.5.1"}
     acc, _ = DEC.struct("CubicPool", base64.b64decode(snap["data"]), 8)
     n = acc["token_count"]
     chain = {
@@ -85,8 +95,14 @@ def cross_check(pool: str, fs: dict) -> dict:
                    "max_leverage_bps": acc["range_manager_max_leverage_bps"],
                    "min_leverage_bps": acc["range_manager_min_leverage_bps"]},
     }
-    diff = {k: {"reconstructed": fs.get(k), "chain": v} for k, v in chain.items() if fs.get(k) != v}
-    return {"result": "VERIFIED" if not diff else "CONFLICTING", "snapshot_slot": snap["slot"], "differences": diff}
+    # a field the replay could not rebuild (creation event in an older, undecodable layout) is a gap, not a conflict
+    missing = sorted(k for k in chain if fs.get(k) is None)
+    diff = {k: {"reconstructed": fs.get(k), "chain": v} for k, v in chain.items() if k not in missing and fs.get(k) != v}
+    result = "CONFLICTING" if diff else "INSUFFICIENT" if missing else "VERIFIED"
+    out = {"result": result, "snapshot_slot": snap["slot"], "differences": diff}
+    if missing:
+        out["not_reconstructed"] = missing
+    return out
 
 
 def write_chain(path: Path, records: list) -> str:
@@ -107,12 +123,13 @@ def verify(pool: str) -> int:
     acc_path = evidence_path(pool).parent / "account.json"
     snap = json.loads(acc_path.read_text()) if acc_path.exists() else None
     from_genesis = not snap or not snap.get("evidence_from_unix_time")
-    acc = DEC.struct("CubicPool", base64.b64decode(snap["data"]), 8)[0] if snap else None
+    legacy = bool(snap) and legacy_layout(snap)
+    acc = DEC.struct("CubicPool", base64.b64decode(snap["data"]), 8)[0] if snap and not legacy else None
     out = replay(pool, txs, acc, from_genesis)
     d = ROOT / "results" / pool
     d.mkdir(parents=True, exist_ok=True)
     prev = write_chain(d / "records.jsonl", out["records"])
-    sw = verify_swaps(pool, txs, json.loads(acc_path.read_text())["data"]) if acc_path.exists() else None
+    sw = verify_swaps(pool, txs, json.loads(acc_path.read_text())["data"]) if acc_path.exists() and not legacy else None
     swap_summary = None
     if sw is not None:
         by_ob: dict = {}
@@ -145,12 +162,15 @@ def verify(pool: str) -> int:
         "chain_head": prev,
         "final_state": out["final_state"],
     }
+    adm = admin_actions(pool, txs)
+    summary["admin_actions"] = dict(adm["summary"], chain_head=write_chain(d / "admin.jsonl", adm["records"]))
     (d / "summary.json").write_text(json.dumps(summary, indent=1, sort_keys=True) + "\n")
     print(json.dumps({k: summary[k] for k in ("pool", "range_manager_updates", "results", "undecodable_items")}))
     print("  final state matches chain:", final_check["result"], final_check.get("differences") or "")
     if swap_summary:
         print("  swaps:", swap_summary["swaps"], swap_summary["results"], "reserves:",
               {k: v for k, v in swap_summary["reserve_checks"].items() if k != "examples"})
+    print("  admin actions:", adm["summary"]["actions"], adm["summary"]["by_obligation"], "alerts:", adm["summary"]["alerts"])
     for rec in out["records"]:
         print(f"  slot {rec['transition']['slot']}  {rec['final']:12}  "
               + " ".join(f"{o['id']}={o['result']}" for o in rec["obligations"]))

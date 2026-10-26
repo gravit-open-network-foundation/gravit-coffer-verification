@@ -1,18 +1,29 @@
 {
+ "admin_actions": {
+  "actions": 3,
+  "admin_now": null,
+  "alerts": 0,
+  "by_obligation": {
+   "COF-ADM-PROTO": {
+    "RECORDED": 3
+   }
+  },
+  "chain_head": "f6a862f034cf40d955d56ac961aba5ebfba24e4e129703d6b1ab14de73c695d7"
+ },
  "chain_head": "0000000000000000000000000000000000000000000000000000000000000000",
  "evidence": {
   "file": "evidence/5dDezuaofYZUBdab8gSWY3ys86VbMrTxsRuf3ayqe8GJ/transactions.jsonl.gz",
   "first_slot": 446347595,
   "from": 1789164000,
-  "last_slot": 455918801,
-  "transactions": 728
+  "last_slot": 461804998,
+  "transactions": 1099
  },
  "final_state": {
   "actual_balances": [
-   5941275733,
-   11510583730608895,
-   1737314336,
-   1802128135
+   8372114950,
+   12274874516730347,
+   1562210367,
+   1663141515
   ],
   "config": {
    "max_leverage_bps": 0,
@@ -25,10 +36,10 @@
   "last_update": 0,
   "range_manager": "PooLJDchELHNn4McyqX1vqKyrsTVRugi8DihbSLfsEW",
   "virtual_balances": [
-   35264109200,
-   43875011052939464,
-   3963421842,
-   3940243356
+   37694948417,
+   44639301839060916,
+   3788317873,
+   3801256736
   ],
   "weights": [
    2500,
@@ -48,31 +59,31 @@
  "swap_verification": {
   "by_obligation": {
    "COF-FEE": {
-    "VERIFIED": 729
+    "VERIFIED": 1097
    },
    "COF-POST": {
     "INSUFFICIENT": 1,
-    "VERIFIED": 728
+    "VERIFIED": 1096
    },
    "COF-PRICE": {
     "INSUFFICIENT": 1,
-    "VERIFIED": 728
+    "VERIFIED": 1096
    },
    "COF-SURGE": {
-    "NOT_APPLICABLE": 728
+    "NOT_APPLICABLE": 1096
    }
   },
-  "chain_head": "4c812730189413efb601b6155c208999a1c92338d40d7a4ed5bef9ce4655aaf4",
+  "chain_head": "36a703abdee6e9ae051ff082677d282f3e1d3030af258351be6fda08fa6e8fb7",
   "reserve_checks": {
    "INVALID": 0,
-   "VERIFIED": 1460,
+   "VERIFIED": 2196,
    "examples": []
   },
   "results": {
    "INSUFFICIENT": 1,
-   "VERIFIED": 728
+   "VERIFIED": 1096
   },
-  "swaps": 729
+  "swaps": 1097
  },
  "undecodable_items": 0
 }
