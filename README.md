@@ -85,7 +85,12 @@ and 3 on v6, 30,632 transactions in total, all results in [REPORT.md](REPORT.md)
   (`AL4y…` stable1, `CSgr…` memes, `6Njp…` 3pool3x, `EFfV…` CubeePool, `5dDe…` QuoteMemo,
   `3Yix…` bitcoin), which are covered as one contiguous window from 11 Sep 2026 to 26 Oct 2026.
   The public RPC serves about one transaction per second; their earlier history is not covered.
-- Swaps: 25,696 re-computed, 25,676 VERIFIED, 20 INSUFFICIENT (Solana truncated the logs), none INVALID.
+- Swaps: 25,696 re-computed, 25,692 VERIFIED, 4 INSUFFICIENT, none INVALID. Solana cuts a transaction's
+  logs when they exceed its size limit, and the cut part is stored nowhere. Where the pool state after
+  a cut was lost, the next swap's pre-state is rebuilt from its own PoolStateLog and accepted only if it
+  matches every vault's token balance before the transaction; a swap whose own PoolStateLog was cut is
+  checked against the vault balances after it. The remaining 4 are swaps inside truncated transactions
+  with several pool operations or no known prior state.
 - Vault balance = LP reserves + protocol fees: 62,620 of 62,620 checks VERIFIED.
 - 16 early v5 pools (May 2026, inactive since) were never migrated to the v5 account layout
   (1,154 instead of 1,683 bytes), and several pools were created by an earlier program version

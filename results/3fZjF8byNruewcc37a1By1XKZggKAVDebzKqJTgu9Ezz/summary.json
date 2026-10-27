@@ -60,18 +60,19 @@
     "VERIFIED": 198
    },
    "COF-POST": {
-    "INSUFFICIENT": 2,
+    "INSUFFICIENT": 1,
+    "NOT_APPLICABLE": 1,
     "VERIFIED": 196
    },
    "COF-PRICE": {
-    "INSUFFICIENT": 2,
-    "VERIFIED": 196
+    "INSUFFICIENT": 1,
+    "VERIFIED": 197
    },
    "COF-SURGE": {
-    "NOT_APPLICABLE": 196
+    "NOT_APPLICABLE": 197
    }
   },
-  "chain_head": "8c804757937c658762a6d1759055defc2904fe9ddc63f4d744bda2df99e7adc3",
+  "chain_head": "e5525da7f9a4bc34a6d80272a6994e1b159587cad59df9295878a7642c2cf79c",
   "reserve_checks": {
    "INVALID": 0,
    "VERIFIED": 396,
@@ -79,8 +80,8 @@
    "skipped_truncated_logs": 1
   },
   "results": {
-   "INSUFFICIENT": 2,
-   "VERIFIED": 196
+   "INSUFFICIENT": 1,
+   "VERIFIED": 197
   },
   "swaps": 198
  },

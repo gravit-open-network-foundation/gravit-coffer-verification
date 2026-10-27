@@ -63,18 +63,17 @@
     "VERIFIED": 2022
    },
    "COF-POST": {
-    "INSUFFICIENT": 1,
+    "NOT_APPLICABLE": 1,
     "VERIFIED": 2021
    },
    "COF-PRICE": {
-    "INSUFFICIENT": 1,
-    "VERIFIED": 2021
+    "VERIFIED": 2022
    },
    "COF-SURGE": {
-    "NOT_APPLICABLE": 2021
+    "NOT_APPLICABLE": 2022
    }
   },
-  "chain_head": "0dc1ffd8eef34b20b01150924410a2795a1be4bf3ec805df706db11e2caa72ab",
+  "chain_head": "44b28d88a1e1674ca0e6e61e74d63fda3653c28718ce8988bb5019c1931e5c02",
   "reserve_checks": {
    "INVALID": 0,
    "VERIFIED": 4045,
@@ -82,8 +81,7 @@
    "skipped_truncated_logs": 1
   },
   "results": {
-   "INSUFFICIENT": 1,
-   "VERIFIED": 2021
+   "VERIFIED": 2022
   },
   "swaps": 2022
  },
