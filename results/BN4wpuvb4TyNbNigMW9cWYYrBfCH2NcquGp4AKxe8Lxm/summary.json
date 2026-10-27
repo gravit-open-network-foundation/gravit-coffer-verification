@@ -1,0 +1,88 @@
+{
+ "admin_actions": {
+  "actions": 5,
+  "admin_now": "9HLJC8WyNg5WP4kkeiEr7BiTh2ou1582g3JrorwuSLTg",
+  "alerts": 0,
+  "by_obligation": {
+   "COF-ADM-AUTH": {
+    "RECORDED": 1
+   },
+   "COF-ADM-PROTO": {
+    "RECORDED": 4
+   }
+  },
+  "chain_head": "08393bf69768842f6e474bdbdc0608326be4c093d1e41a7b5474725b6f7625e4"
+ },
+ "chain_head": "0000000000000000000000000000000000000000000000000000000000000000",
+ "evidence": {
+  "file": "evidence/BN4wpuvb4TyNbNigMW9cWYYrBfCH2NcquGp4AKxe8Lxm/transactions.jsonl.gz",
+  "first_slot": 437158726,
+  "from": "pool creation",
+  "last_slot": 461665166,
+  "transactions": 19
+ },
+ "final_state": {
+  "actual_balances": [
+   92690938908,
+   27031524550
+  ],
+  "config": {
+   "max_leverage_bps": 0,
+   "max_vb_change_pct": 0,
+   "max_weight_change_pct": 0,
+   "min_leverage_bps": 0,
+   "min_update_interval_secs": 0
+  },
+  "enabled": false,
+  "last_update": 0,
+  "range_manager": "11111111111111111111111111111111",
+  "virtual_balances": [
+   139044267707,
+   40532494104
+  ],
+  "weights": null
+ },
+ "final_state_matches_chain": {
+  "differences": {},
+  "not_reconstructed": [
+   "weights"
+  ],
+  "result": "INSUFFICIENT",
+  "snapshot_slot": 461818139
+ },
+ "pool": "BN4wpuvb4TyNbNigMW9cWYYrBfCH2NcquGp4AKxe8Lxm",
+ "range_manager_updates": 0,
+ "rejected_by_program": [],
+ "results": {},
+ "swap_verification": {
+  "by_obligation": {
+   "COF-FEE": {
+    "VERIFIED": 5
+   },
+   "COF-POST": {
+    "INSUFFICIENT": 2,
+    "VERIFIED": 3
+   },
+   "COF-PRICE": {
+    "INSUFFICIENT": 2,
+    "VERIFIED": 3
+   },
+   "COF-SURGE": {
+    "NOT_APPLICABLE": 3
+   }
+  },
+  "chain_head": "93e46602ec777969c52d87234436014f7e3650d0f871e1443660689d010302af",
+  "reserve_checks": {
+   "INVALID": 0,
+   "VERIFIED": 8,
+   "examples": [],
+   "skipped_truncated_logs": 1
+  },
+  "results": {
+   "INSUFFICIENT": 2,
+   "VERIFIED": 3
+  },
+  "swaps": 5
+ },
+ "undecodable_items": 9
+}

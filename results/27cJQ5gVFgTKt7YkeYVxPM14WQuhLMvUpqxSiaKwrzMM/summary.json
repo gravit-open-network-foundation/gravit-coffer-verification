@@ -1,0 +1,46 @@
+{
+ "admin_actions": {
+  "actions": 1,
+  "admin_now": "6NAL3YafKj9NPv3bkvdTxph33VGM9ayoJRNaTeBhTAaz",
+  "alerts": 0,
+  "by_obligation": {
+   "COF-ADM-AUTH": {
+    "RECORDED": 1
+   }
+  },
+  "chain_head": "3d7ccb28724287dac93f2c977d18ff595c3ac73c19f037df7e1aa1bae61b9af4"
+ },
+ "chain_head": "0000000000000000000000000000000000000000000000000000000000000000",
+ "evidence": {
+  "file": "evidence/27cJQ5gVFgTKt7YkeYVxPM14WQuhLMvUpqxSiaKwrzMM/transactions.jsonl.gz",
+  "first_slot": 416949525,
+  "from": "pool creation",
+  "last_slot": 418197511,
+  "transactions": 22
+ },
+ "final_state": {
+  "actual_balances": null,
+  "config": {
+   "max_leverage_bps": 0,
+   "max_vb_change_pct": 0,
+   "max_weight_change_pct": 0,
+   "min_leverage_bps": 0,
+   "min_update_interval_secs": 0
+  },
+  "enabled": false,
+  "last_update": 0,
+  "range_manager": "11111111111111111111111111111111",
+  "virtual_balances": null,
+  "weights": null
+ },
+ "final_state_matches_chain": {
+  "detail": "account in the pre-v5 layout (never migrated); not decodable with IDL 0.5.1",
+  "result": "INSUFFICIENT"
+ },
+ "pool": "27cJQ5gVFgTKt7YkeYVxPM14WQuhLMvUpqxSiaKwrzMM",
+ "range_manager_updates": 0,
+ "rejected_by_program": [],
+ "results": {},
+ "swap_verification": null,
+ "undecodable_items": 30
+}

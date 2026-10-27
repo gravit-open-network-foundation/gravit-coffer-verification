@@ -63,8 +63,8 @@ recorded raw next to each result. A price feed is not on-chain evidence, and the
 Coffer's RWA index pools run contract version v6 under a new program,
 `6DhW1Ek5WLJSnFSpBBGYeVRbRiWtCXHbqyGJ6LcVZgH9`. Its interface (IDL `cubic_pool` 0.5.1 from the
 MIT-licensed `coffer-so/sdk`, branch `feature/sdk-v6`, vendored as `cubic_pool-0.5.1-v6.json`) adds
-trailing event fields (swap transfer fees, pool id, minimum leverage). Set `COFFER_PROGRAM` to that
-address and the v6 IDL is used. Coffer confirmed two live v6 indexes, xStocks5 (`HGbQ…`) and
+trailing event fields (swap transfer fees, pool id, minimum leverage). The program, and with it
+the IDL, is taken from each pool's account snapshot. Coffer confirmed two live v6 indexes, xStocks5 (`HGbQ…`) and
 BigTech (`Eyf6…`); `4nKu…` is not listed in the app. Three pools exist on the program:
 
 | Pool | Tokens | History | Result |
@@ -74,9 +74,35 @@ BigTech (`Eyf6…`); `4nKu…` is not listed in the app. Three pools exist on th
 | `Eyf6zRCBt98kEYoRUr1ZhgkHA1FjEkDC2ot4ySnvWMKq` | NVDAx, GOOGLx, METAx, MSFTx, TSLAx, AMZNx | 2 liquidity adds, no swaps yet | 12 reserve checks VERIFIED, final state matches chain |
 
 These pools run on contracts that Coffer marks as not yet audited. This replay is not an audit;
-it checks that what happened on chain agrees with the pool's own rules. Next: rules for admin
-actions (who changed fees, who became admin, whether any debug or withdrawal function was
-called) and a continuous observer with alerts.
+it checks that what happened on chain agrees with the pool's own rules.
+
+## All indexes and admin actions (C-03, 27 Oct 2026)
+
+Every pool of both programs is now covered: 43 on v5 (`8iQtGj9mcUfFUGaiCpPy89swC3s8YTC8FhVZWfgeZhwu`)
+and 3 on v6, 30,632 transactions in total, all results in [REPORT.md](REPORT.md).
+
+- Evidence: full history from pool creation for every pool, except the six busiest
+  (`AL4y…` stable1, `CSgr…` memes, `6Njp…` 3pool3x, `EFfV…` CubeePool, `5dDe…` QuoteMemo,
+  `3Yix…` bitcoin), which are covered as one contiguous window from 11 Sep 2026 to 26 Oct 2026.
+  The public RPC serves about one transaction per second; their earlier history is not covered.
+- Swaps: 25,696 re-computed, 25,676 VERIFIED, 20 INSUFFICIENT (Solana truncated the logs), none INVALID.
+- Vault balance = LP reserves + protocol fees: 62,620 of 62,620 checks VERIFIED.
+- 16 early v5 pools (May 2026, inactive since) were never migrated to the v5 account layout
+  (1,154 instead of 1,683 bytes), and several pools were created by an earlier program version
+  whose events IDL 0.5.1 cannot decode. Their final-state comparison is `INSUFFICIENT`: a gap,
+  not a disagreement.
+
+Admin actions, profile COFFER-ADM-01 ([coffer_verify/admin.py](coffer_verify/admin.py)), written to
+`results/<pool>/admin.jsonl`:
+
+| ID | Obligation | Result |
+|---|---|---|
+| COF-ADM-AUTH | a pool admin action is signed by the pool admin in office at that moment | 10 VERIFIED, 1 INSUFFICIENT (evidence starts after creation), 40 pool creations recorded |
+| COF-ADM-XFER | an admin transfer is accepted only by the admin named when it was initiated | 3 VERIFIED |
+| COF-ADM-DEBUG | no debug or withdrawal function (`debug_withdraw_liquidity`, `withdraw_sol`) touched a pool | 0 calls |
+| COF-ADM-PROTO | protocol actions through the config authority (fees, enable/disable, fee collection) | 115 RECORDED, listed with signer, not judged |
+
+Next: a continuous observer with alerts.
 
 ```bash
 python3 -m coffer_verify.run verify HGbQ74sgfvyhyEBgPwtKBge2HFcnZbHXTCSA2QdBTHA3   # program taken from evidence/<pool>/account.json

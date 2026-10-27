@@ -1,4 +1,18 @@
 {
+ "admin_actions": {
+  "actions": 7,
+  "admin_now": "HFtURAgrRudbyAzTDfVYKinbrYXXttqQGdoAys5JNu1F",
+  "alerts": 0,
+  "by_obligation": {
+   "COF-ADM-AUTH": {
+    "RECORDED": 1
+   },
+   "COF-ADM-PROTO": {
+    "RECORDED": 6
+   }
+  },
+  "chain_head": "896cbf584f66947396117c4f33fd736dd1e15c574220e1ca4ec9560aa18b15eb"
+ },
  "chain_head": "0000000000000000000000000000000000000000000000000000000000000000",
  "evidence": {
   "file": "evidence/4nKuFAyLARPCmSNZzdU3K9X4tfy3XvaZbQ4iqzKSx4Ta/transactions.jsonl.gz",

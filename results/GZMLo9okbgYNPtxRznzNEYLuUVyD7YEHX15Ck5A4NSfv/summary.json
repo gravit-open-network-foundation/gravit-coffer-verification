@@ -1,11 +1,25 @@
 {
+ "admin_actions": {
+  "actions": 5,
+  "admin_now": "4vPXU53SbsgsDjcpS4T2UQvsZShZcEEMTSvjxoTHUKRn",
+  "alerts": 0,
+  "by_obligation": {
+   "COF-ADM-AUTH": {
+    "RECORDED": 1
+   },
+   "COF-ADM-PROTO": {
+    "RECORDED": 4
+   }
+  },
+  "chain_head": "d289eace48ae1f292daa8630f26556e53c2bfcda7b91e9c552730ffcfe984416"
+ },
  "chain_head": "0000000000000000000000000000000000000000000000000000000000000000",
  "evidence": {
   "file": "evidence/GZMLo9okbgYNPtxRznzNEYLuUVyD7YEHX15Ck5A4NSfv/transactions.jsonl.gz",
   "first_slot": 452274491,
   "from": "pool creation",
-  "last_slot": 452275743,
-  "transactions": 4
+  "last_slot": 461666701,
+  "transactions": 7
  },
  "final_state": {
   "actual_balances": [
@@ -37,7 +51,7 @@
  "final_state_matches_chain": {
   "differences": {},
   "result": "VERIFIED",
-  "snapshot_slot": 455927696
+  "snapshot_slot": 461823447
  },
  "pool": "GZMLo9okbgYNPtxRznzNEYLuUVyD7YEHX15Ck5A4NSfv",
  "range_manager_updates": 0,

@@ -1,16 +1,30 @@
 {
+ "admin_actions": {
+  "actions": 5,
+  "admin_now": "8gqcZnr9TgGDjTmPxXbxoc5Y9jy5Lpz3EMjJp4aF1JYw",
+  "alerts": 0,
+  "by_obligation": {
+   "COF-ADM-AUTH": {
+    "RECORDED": 1
+   },
+   "COF-ADM-PROTO": {
+    "RECORDED": 4
+   }
+  },
+  "chain_head": "26430141445d830920dddae10dae822acc024617821f6d9953faab6299eecc51"
+ },
  "chain_head": "0000000000000000000000000000000000000000000000000000000000000000",
  "evidence": {
   "file": "evidence/3fZjF8byNruewcc37a1By1XKZggKAVDebzKqJTgu9Ezz/transactions.jsonl.gz",
-  "first_slot": 446647544,
-  "from": 1789164000,
-  "last_slot": 455722940,
-  "transactions": 113
+  "first_slot": 429694202,
+  "from": "pool creation",
+  "last_slot": 461661364,
+  "transactions": 505
  },
  "final_state": {
   "actual_balances": [
-   4220164478,
-   8768347412
+   607,
+   1309
   ],
   "config": {
    "max_leverage_bps": 0,
@@ -23,17 +37,18 @@
   "last_update": 0,
   "range_manager": "11111111111111111111111111111111",
   "virtual_balances": [
-   50893444478,
-   22770331412
+   7560,
+   3395
   ],
-  "weights": [
-   2000,
-   8000
-  ]
+  "weights": null
  },
  "final_state_matches_chain": {
-  "detail": "evidence starts after pool creation; no full replay",
-  "result": "NOT_APPLICABLE"
+  "differences": {},
+  "not_reconstructed": [
+   "weights"
+  ],
+  "result": "INSUFFICIENT",
+  "snapshot_slot": 461858077
  },
  "pool": "3fZjF8byNruewcc37a1By1XKZggKAVDebzKqJTgu9Ezz",
  "range_manager_updates": 0,
@@ -42,31 +57,32 @@
  "swap_verification": {
   "by_obligation": {
    "COF-FEE": {
-    "VERIFIED": 113
+    "VERIFIED": 198
    },
    "COF-POST": {
-    "INSUFFICIENT": 1,
-    "VERIFIED": 112
+    "INSUFFICIENT": 2,
+    "VERIFIED": 196
    },
    "COF-PRICE": {
-    "INSUFFICIENT": 1,
-    "VERIFIED": 112
+    "INSUFFICIENT": 2,
+    "VERIFIED": 196
    },
    "COF-SURGE": {
-    "NOT_APPLICABLE": 112
+    "NOT_APPLICABLE": 196
    }
   },
-  "chain_head": "ad7df5124bc5b076244c4f9d617b2e2a9e38de29807fec32de8d2b928d748320",
+  "chain_head": "8c804757937c658762a6d1759055defc2904fe9ddc63f4d744bda2df99e7adc3",
   "reserve_checks": {
    "INVALID": 0,
-   "VERIFIED": 226,
-   "examples": []
+   "VERIFIED": 396,
+   "examples": [],
+   "skipped_truncated_logs": 1
   },
   "results": {
-   "INSUFFICIENT": 1,
-   "VERIFIED": 112
+   "INSUFFICIENT": 2,
+   "VERIFIED": 196
   },
-  "swaps": 113
+  "swaps": 198
  },
- "undecodable_items": 0
+ "undecodable_items": 102
 }

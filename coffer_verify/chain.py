@@ -77,6 +77,8 @@ def fetch_transaction(sig: str, cache: Path, url: str = DEFAULT_RPC) -> Dict[str
     if path.exists():
         return json.loads(path.read_text())
     tx = rpc("getTransaction", [sig, {"encoding": "json", "maxSupportedTransactionVersion": 1}], url)
+    if tx is None:  # not yet served by the node; never cache an empty answer
+        raise RuntimeError(f"transaction {sig} not available yet")
     cache.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(tx, sort_keys=True))
     return tx
