@@ -7,7 +7,7 @@ reproduced by CI from the committed evidence. This is not a security audit.
 ## Summary
 
 - Range-manager transitions checked: **6** — (6 verified)
-- Swaps re-computed (price, fees, surge fee, post-state): **25696** — (20 insufficient, 25676 verified)
+- Swaps re-computed (price, fees, surge fee, post-state): **25696** — (4 insufficient, 25692 verified)
 - Pool vault balance = LP reserves + protocol fees: **62620 of 62620** checks
 - Admin and protocol actions (COFFER-ADM-01): **169** — (1 insufficient, 155 recorded, 13 verified); debug or withdrawal calls: **0**
 
@@ -25,30 +25,30 @@ are listed with their signer, not judged.
 | `2Qi9g1DU…` | 6 | pool creation | 0  | 0  | 0/0 | INSUFFICIENT |
 | `2VNiuLws…` | 13 | pool creation | 0  | 2 (2 verified) | 6/6 | INSUFFICIENT |
 | `3UPmQEeb…` | 1 | pool creation | 0  | 0  | 0/0 | INSUFFICIENT |
-| `3YixTPPZ…` | 4235 | since 2026-09-11 | 0  | 1467 (2 insufficient, 1465 verified) | 13986/13986 | NOT_APPLICABLE |
-| `3fZjF8by…` | 505 | pool creation | 0  | 198 (2 insufficient, 196 verified) | 396/396 | INSUFFICIENT |
+| `3YixTPPZ…` | 4235 | since 2026-09-11 | 0  | 1467 (1467 verified) | 13986/13986 | NOT_APPLICABLE |
+| `3fZjF8by…` | 505 | pool creation | 0  | 198 (1 insufficient, 197 verified) | 396/396 | INSUFFICIENT |
 | `3za6eYME…` | 1 | pool creation | 0  | 0  | 0/0 | INSUFFICIENT |
 | `4nKuFAyL…` | 8 | pool creation | 0  | 0  | 0/0 | VERIFIED |
-| `5dDezuao…` | 1099 | since 2026-09-11 | 0  | 1097 (1 insufficient, 1096 verified) | 2196/2196 | NOT_APPLICABLE |
+| `5dDezuao…` | 1099 | since 2026-09-11 | 0  | 1097 (1097 verified) | 2196/2196 | NOT_APPLICABLE |
 | `6CovdqUp…` | 29 | pool creation | 0  | 0  | 0/0 | INSUFFICIENT |
-| `6NjpZAqu…` | 2248 | since 2026-09-11 | 0  | 2235 (4 insufficient, 2231 verified) | 4504/4504 | NOT_APPLICABLE |
+| `6NjpZAqu…` | 2248 | since 2026-09-11 | 0  | 2235 (2235 verified) | 4504/4504 | NOT_APPLICABLE |
 | `6Q4KAcSn…` | 6 | pool creation | 0  | 0  | 0/0 | INSUFFICIENT |
 | `7G6gstbh…` | 6 | pool creation | 0  | 0  | 0/0 | INSUFFICIENT |
-| `7nXr8T7i…` | 2300 | pool creation | 0  | 2022 (1 insufficient, 2021 verified) | 4045/4045 | VERIFIED |
+| `7nXr8T7i…` | 2300 | pool creation | 0  | 2022 (2022 verified) | 4045/4045 | VERIFIED |
 | `7ruxf5AP…` | 5 | pool creation | 0  | 0  | 0/0 | INSUFFICIENT |
-| `8Ep1KN9h…` | 88 | pool creation | 0  | 18 (1 insufficient, 17 verified) | 48/48 | INSUFFICIENT |
+| `8Ep1KN9h…` | 88 | pool creation | 0  | 18 (18 verified) | 48/48 | INSUFFICIENT |
 | `8Q5oT7Vy…` | 2 | pool creation | 0  | 0  | 0/0 | INSUFFICIENT |
 | `9S9NyQNF…` | 2 | pool creation | 0  | 0  | 0/0 | INSUFFICIENT |
 | `9V9MkHqG…` | 5 | pool creation | 0  | 0  | 0/0 | INSUFFICIENT |
 | `9hLjD15X…` | 3 | pool creation | 0  | 0  | 0/0 | INSUFFICIENT |
 | `9y2s8cQz…` | 5 | pool creation | 0  | 0  | 0/0 | INSUFFICIENT |
-| `AL4yxA4o…` | 8804 | since 2026-09-11 | 0  | 8785 (1 insufficient, 8784 verified) | 17602/17602 | NOT_APPLICABLE |
+| `AL4yxA4o…` | 8804 | since 2026-09-11 | 0  | 8785 (8785 verified) | 17602/17602 | NOT_APPLICABLE |
 | `Aumt75ms…` | 1 | pool creation | 0  | 0  | 0/0 | INSUFFICIENT |
-| `BN4wpuvb…` | 19 | pool creation | 0  | 5 (2 insufficient, 3 verified) | 8/8 | INSUFFICIENT |
+| `BN4wpuvb…` | 19 | pool creation | 0  | 5 (1 insufficient, 4 verified) | 8/8 | INSUFFICIENT |
 | `CME49e5C…` | 14 | pool creation | 0  | 0  | 0/0 | INSUFFICIENT |
-| `CSgrEBxs…` | 6478 | since 2026-09-11 | 0  | 6481 (1 insufficient, 6480 verified) | 12973/12973 | NOT_APPLICABLE |
+| `CSgrEBxs…` | 6478 | since 2026-09-11 | 0  | 6481 (6481 verified) | 12973/12973 | NOT_APPLICABLE |
 | `CzPEgwuu…` | 1392 | pool creation | 0  | 834 (834 verified) | 1674/1674 | VERIFIED |
-| `EFfVk5qc…` | 1266 | since 2026-09-11 | 0  | 1258 (1 insufficient, 1257 verified) | 2536/2536 | NOT_APPLICABLE |
+| `EFfVk5qc…` | 1266 | since 2026-09-11 | 0  | 1258 (1258 verified) | 2536/2536 | NOT_APPLICABLE |
 | `EjKEqyGR…` | 5 | pool creation | 0  | 0  | 0/0 | VERIFIED |
 | `Eyf6zRCB…` | 10 | pool creation | 0  | 0  | 12/12 | VERIFIED |
 | `FU1xB3Jh…` | 1 | pool creation | 0  | 0  | 0/0 | INSUFFICIENT |
@@ -56,13 +56,13 @@ are listed with their signer, not judged.
 | `GC8YU7MH…` | 1 | pool creation | 0  | 0  | 0/0 | INSUFFICIENT |
 | `GFuscUcu…` | 2 | pool creation | 0  | 0  | 0/0 | INSUFFICIENT |
 | `GZMLo9ok…` | 7 | pool creation | 0  | 0  | 6/6 | VERIFIED |
-| `GkMm2ZdB…` | 503 | pool creation | 0  | 198 (2 insufficient, 196 verified) | 396/396 | INSUFFICIENT |
+| `GkMm2ZdB…` | 503 | pool creation | 0  | 198 (1 insufficient, 197 verified) | 396/396 | INSUFFICIENT |
 | `GwHfBi4p…` | 1 | pool creation | 0  | 0  | 0/0 | INSUFFICIENT |
 | `H8z4woAK…` | 6 | pool creation | 0  | 0  | 0/0 | INSUFFICIENT |
 | `HGbQ74sg…` | 17 | pool creation | 0  | 5 (5 verified) | 20/20 | VERIFIED |
 | `HtScETzS…` | 175 | pool creation | 3 (3 verified) | 106 (106 verified) | 232/232 | VERIFIED |
 | `HtTzPP37…` | 2 | pool creation | 0  | 0  | 0/0 | INSUFFICIENT |
-| `HwDbGNHp…` | 801 | pool creation | 3 (3 verified) | 643 (2 insufficient, 641 verified) | 1287/1287 | VERIFIED |
+| `HwDbGNHp…` | 801 | pool creation | 3 (3 verified) | 643 (1 insufficient, 642 verified) | 1287/1287 | VERIFIED |
 | `RFahD5yT…` | 2 | pool creation | 0  | 0  | 0/0 | INSUFFICIENT |
 | `gnRPt34V…` | 1 | pool creation | 0  | 0  | 0/0 | INSUFFICIENT |
 | `ips2kS7G…` | 7 | pool creation | 0  | 0  | 0/0 | INSUFFICIENT |

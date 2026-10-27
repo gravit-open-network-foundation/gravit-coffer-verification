@@ -80,6 +80,38 @@ def _vault_balances(tx: Dict[str, Any], pool: str) -> Dict[str, int]:
     return out
 
 
+def _vault_pre_balances(tx: Dict[str, Any], pool: str) -> Dict[str, int]:
+    out = {}
+    for b in (tx.get("meta") or {}).get("preTokenBalances") or []:
+        if b.get("owner") == pool:
+            out[b["mint"]] = int(b["uiTokenAmount"]["amount"])
+    return out
+
+
+def _pre_from_post(tx, pool, e, prm, events, pos) -> Optional[Dict[str, List[int]]]:
+    """Pre-state of a transaction's first swap when no pre-state is known: its own PoolStateLog rolled back by the event
+    amounts, accepted only if LP reserves + protocol fees then equal every vault's balance before the
+    transaction (independent ledger data)."""
+    rest = events[pos + 1:]
+    if events[:pos] and any(n != "MaxSelloffWindowAdvanced" for n, _ in events[:pos]) or not rest or rest[0][0] != "PoolStateLog":
+        return None
+    try:
+        i, o = prm["mints"].index(e["token_in"]), prm["mints"].index(e["token_out"])
+    except ValueError:
+        return None
+    log = rest[0][1]
+    pre = {"vb": list(log["virtual_balances"]), "actual": list(log["actual_balances"]),
+           "fees": list(log["protocol_fees_owed"])}
+    net, gross = e["amount_in"] - e["protocol_fee_amount"], e["amount_out"] + e["surge_fee_amount"]
+    pre["vb"][i] -= net; pre["actual"][i] -= net; pre["fees"][i] -= e["protocol_fee_amount"]
+    pre["vb"][o] += gross; pre["actual"][o] += gross; pre["fees"][o] -= e["surge_fee_amount"]
+    vaults = _vault_pre_balances(tx, pool)
+    if not vaults or any(m in vaults and vaults[m] != pre["actual"][k] + pre["fees"][k]
+                         for k, m in enumerate(prm["mints"])):
+        return None
+    return pre
+
+
 def _cmp(name: str, expected: Dict[str, Any], observed: Dict[str, Any]) -> Dict[str, Any]:
     diff = {k: {"computed": expected[k], "on_chain": observed.get(k)} for k in expected if expected[k] != observed.get(k)}
     return {"id": name, "result": "VERIFIED" if not diff else "INVALID", "detail": diff or None}
@@ -118,14 +150,24 @@ def verify_swaps(pool: str, txs: List[Dict[str, Any]], account_b64: str) -> Dict
                                             "window_start_timestamp": e["window_start_timestamp"],
                                             "selloff_vb_snapshot": e["vb_snapshot"], "_from_event": True}
             elif name == "Swap":
-                pending = check_swap(tx, e, prm, state, window)
+                rebuilt = None
+                if state is None and not truncated and ixs and ixs[0]["name"] == "swap":
+                    rebuilt = _pre_from_post(tx, pool, e, prm, events, pos)
+                pending = check_swap(tx, e, prm, rebuilt or state, window)
+                if rebuilt is not None:
+                    pending["pre_state"] = "rebuilt from this swap's PoolStateLog, confirmed by vault balances before the transaction"
+                    pending.pop("_post", None)
+                    pending["_rebuilt"] = True
                 swaps.append(pending)
             elif name == "PoolStateLog":
                 observed = {"vb": list(e["virtual_balances"]), "actual": list(e["actual_balances"]),
                             "fees": list(e["protocol_fees_owed"])}
                 if pending is not None:
                     post = pending.pop("_post", None)
-                    if post is None:
+                    if pending.pop("_rebuilt", False):
+                        pending["obligations"].append({"id": "COF-POST", "result": "NOT_APPLICABLE",
+                                                       "detail": "pre-state was derived from this post-state"})
+                    elif post is None:
                         pending["obligations"].append({"id": "COF-POST", "result": "INSUFFICIENT", "detail": "no pre-state"})
                     else:
                         pending["obligations"].append(_cmp("COF-POST", post, observed))
@@ -144,9 +186,17 @@ def verify_swaps(pool: str, txs: List[Dict[str, Any]], account_b64: str) -> Dict
                             reserves["examples"].append({"slot": tx["slot"], "token": k, "vault": held,
                                                          "actual_plus_fees": booked, "difference": held - booked})
         if pending is not None:
-            pending.pop("_post", None)
-            why = "Solana truncated this transaction's logs" if truncated else "no PoolStateLog"
-            pending["obligations"].append({"id": "COF-POST", "result": "INSUFFICIENT", "detail": why})
+            post = pending.pop("_post", None)
+            lone = sum(1 for n, _ in events if n == "Swap") == 1 and {x["name"] for x in ixs} <= {"swap"}
+            vaults = _vault_balances(tx, pool)
+            if truncated and post is not None and lone and vaults:
+                # the PoolStateLog was cut off: compare the predicted reserves with what the vaults hold after the transaction
+                pending["obligations"].append(_cmp("COF-POST", {m: post["actual"][k] + post["fees"][k]
+                                                                for k, m in enumerate(prm["mints"]) if m in vaults}, vaults))
+                pending["obligations"][-1]["detail"] = pending["obligations"][-1]["detail"] or "logs truncated: checked against vault balances"
+            else:
+                why = "Solana truncated this transaction's logs" if truncated else "no PoolStateLog"
+                pending["obligations"].append({"id": "COF-POST", "result": "INSUFFICIENT", "detail": why})
             pending["final"] = final(pending["obligations"])
         if truncated:
             state = None  # events after the cut are lost: resynchronise from the next PoolStateLog
